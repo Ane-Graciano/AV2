@@ -8,9 +8,11 @@ type PropsInput = {
     type: string,
     name: string,
     value?: string,
-    palceholder?: string,
+    placeholder?: string,
+    required?: boolean;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    classNameInput?: string
+    maxLength?: number,
+    classNameInput?: string,
     classNameLabel?: string
 }
 
@@ -25,10 +27,12 @@ export default class InputLinha extends Component<PropsInput,{}>{
                     type={this.props.type}
                     id={this.props.id}
                     name={this.props.name}
-                    placeholder={this.props.palceholder}
+                    placeholder={this.props.placeholder}
                     value={this.props.value}
                     onChange={this.props.onChange}
-                    className={`w-[300px] block px-2 pb-1 pt-5 text-sm text-gray-950 border-b-2 border-[#c0c0c0]  focus:outline-none focus:border-[#3a6ea5] peer  ${this.props.classNameInput}`}
+                    maxLength={this.props.maxLength}
+                    required={this.props.required}
+                    className={`w-[300px] block px-2 pb-1 pt-5 text-sm text-gray-950 border-b-2 border-[#c0c0c0]  focus:outline-none focus:border-[#3a6ea5] peer ${this.props.classNameInput}`}
                 />
                 <label 
                     htmlFor={this.props.htmlfor}
