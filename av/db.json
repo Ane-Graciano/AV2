@@ -1,0 +1,338 @@
+{
+  "funcionarios": [
+    {
+      "id": "503b",
+      "nome": "ana",
+      "telefone": "(11) 11111-1111",
+      "endereco": "teste",
+      "usuario": "ana",
+      "senha": "123",
+      "nivel": "administrativo"
+    },
+    {
+      "id": "2316",
+      "nome": "maria",
+      "telefone": "(22) 22222-2222",
+      "endereco": "teste",
+      "usuario": "ma",
+      "senha": "111",
+      "nivel": "administrativo"
+    },
+    {
+      "id": "0b1a",
+      "nome": "Carla",
+      "telefone": "(11) 11111-2222",
+      "endereco": "teste2",
+      "usuario": "ma",
+      "senha": "12345",
+      "nivel": "operador"
+    },
+    {
+      "id": "c1f3",
+      "nome": "Pedro",
+      "telefone": "(31) 98765-4321",
+      "endereco": "Alameda Flores, 20",
+      "usuario": "pedro_op",
+      "senha": "ops123",
+      "nivel": "operador"
+    },
+    {
+      "id": "7d9e",
+      "nome": "Bruno",
+      "telefone": "(48) 55555-5555",
+      "endereco": "Rua do Sol, 45",
+      "usuario": "bruno_adm",
+      "senha": "admin555",
+      "nivel": "administrativo"
+    },
+    {
+      "id": "a6b2",
+      "nome": "Zeca",
+      "telefone": "(51) 30000-0000",
+      "endereco": "Sítio Alto, 99",
+      "usuario": "zeca_op",
+      "senha": "zop",
+      "nivel": "operador"
+    },
+    {
+      "id": "b8a9",
+      "nome": "Felipe",
+      "telefone": "(19) 4002-8922",
+      "endereco": "Rua das Rosas, 7",
+      "usuario": "felipe_t",
+      "senha": "45678",
+      "nivel": "operador"
+    },
+    {
+      "id": "d4e5",
+      "nome": "Gabriela",
+      "telefone": "(12) 99888-7766",
+      "endereco": "Praça Central, 1",
+      "usuario": "gabi_adm",
+      "senha": "gabi123",
+      "nivel": "administrativo"
+    },
+    {
+      "id": "f2g7",
+      "nome": "Higor",
+      "telefone": "(21) 98765-1234",
+      "endereco": "Avenida Nova, 12",
+      "usuario": "hgr",
+      "senha": "pass123",
+      "nivel": "operador"
+    },
+    {
+      "id": "h9i0",
+      "nome": "Júlia",
+      "telefone": "(11) 91111-2222",
+      "endereco": "Rua das Acácias, 44",
+      "usuario": "juju",
+      "senha": "senhaforte",
+      "nivel": "administrativo"
+    },
+    {
+      "id": "j3k4",
+      "nome": "Lucas",
+      "telefone": "(13) 95555-4444",
+      "endereco": "Praia Grande, 5",
+      "usuario": "lukas",
+      "senha": "123456",
+      "nivel": "operador"
+    },
+    {
+      "id": "l5m6",
+      "nome": "Vanessa",
+      "telefone": "(14) 93333-1111",
+      "endereco": "Bairro Antigo, 22",
+      "usuario": "vns",
+      "senha": "vanessa",
+      "nivel": "administrativo"
+    }
+  ],
+  "nivelAcesso": [
+    {
+      "id": "1",
+      "value": "administrativo",
+      "label": "Administrativo"
+    },
+    {
+      "id": "2",
+      "value": "engenheiro",
+      "label": "Engenheiro"
+    },
+    {
+      "id": "3",
+      "value": "operador",
+      "label": "Operador"
+    }
+  ],
+  "etapa": [
+    {
+      "id": "5209",
+      "nome": "Teste1",
+      "prazo": "2 dias",
+      "statusEtapa": "pendente",
+      "funcSelecionado": [
+        "maria",
+        "ana"
+      ]
+    },
+    {
+      "id": "6b30",
+      "nome": "teste2",
+      "prazo": "5 dias",
+      "statusEtapa": "pendente",
+      "funcSelecionado": [
+        "Pedro",
+        "Bruno",
+        "Gabriela"
+      ]
+    },
+    {
+      "id": "ca42",
+      "nome": "teste3",
+      "prazo": "1 dia",
+      "statusEtapa": "pendente",
+      "funcSelecionado": [
+        "maria",
+        "Júlia",
+        "Higor"
+      ]
+    }
+  ],
+  "statusEtapa": [
+    {
+      "value": "pendente",
+      "label": "Pendente",
+      "id": "30fd"
+    },
+    {
+      "value": "andamento",
+      "label": "Andamento",
+      "id": "ea44"
+    },
+    {
+      "value": "concluida",
+      "label": "Concluida",
+      "id": "703e"
+    }
+  ],
+  "tipoPeca": [
+    {
+      "id": 1,
+      "value": "nacional",
+      "label": "Nacional"
+    },
+    {
+      "id": 2,
+      "value": "importada",
+      "label": "Importada"
+    }
+  ],
+  "statusPeca": [
+    {
+      "id": 1,
+      "value": "emProducao",
+      "label": "Em Produção"
+    },
+    {
+      "id": 2,
+      "value": "transporte",
+      "label": "Transporte"
+    },
+    {
+      "id": 3,
+      "value": "pronta",
+      "label": "Pronta"
+    }
+  ],
+  "pecas": [
+    {
+      "id": "adb5",
+      "nome": "teste",
+      "tipo": "nacional",
+      "fornecedor": "teste",
+      "status": "emProducao"
+    },
+    {
+      "id": "a06a",
+      "nome": "teste2",
+      "tipo": "importada",
+      "fornecedor": "teste2",
+      "status": "emProducao"
+    }
+  ],
+  "tipoAeronave": [
+    {
+      "id": 1,
+      "value": "comercial",
+      "label": "Comercial"
+    },
+    {
+      "id": 2,
+      "value": "militar",
+      "label": "Militar"
+    }
+  ],
+  "aeronave": [
+    {
+      "id": "a332",
+      "modelo": "teste",
+      "tipo": "comercial",
+      "capacidade": "teste",
+      "alcance": "teste"
+    },
+    {
+      "id": "1964",
+      "modelo": "teste2",
+      "tipo": "comercial",
+      "capacidade": "1000",
+      "alcance": "12"
+    }
+  ],
+  "tipoTeste": [
+    {
+      "id": 1,
+      "value": "eletrico",
+      "label": "Eletrico"
+    },
+    {
+      "id": 2,
+      "value": "hidreaulico",
+      "label": "Hidráulico"
+    },
+    {
+      "id": 3,
+      "value": "aerodinamico",
+      "label": "Aerodinâmico"
+    }
+  ],
+  "resultadoTeste": [
+    {
+      "id": 1,
+      "value": "aprovado",
+      "label": "Aprovado"
+    },
+    {
+      "id": 2,
+      "value": "reprovado",
+      "label": "Reprovado"
+    }
+  ],
+  "testes": [
+    {
+      "id": "61e5",
+      "aeronave": "teste2",
+      "tipoTeste": "aerodinamico",
+      "resultado": "aprovado",
+      "data": "2025-11-05",
+      "obs": "deu ruim no trem",
+      "funcResp": "ana"
+    },
+    {
+      "id": "c5d6",
+      "aeronave": "Delta-V",
+      "tipoTeste": "Hidráulico",
+      "resultado": "Aprovado",
+      "data": "2025-11-01",
+      "obs": "Perda de pressão no sistema",
+      "funcResp": "Carla"
+    },
+    {
+      "id": "e7f8",
+      "aeronave": "Zeta-9",
+      "tipoTeste": "Aerodinâmico",
+      "resultado": "Reprovado",
+      "data": "2025-11-10",
+      "obs": "Instabilidade em alta velocidade",
+      "funcResp": "Maria"
+    },
+    {
+      "id": "g9h0",
+      "aeronave": "Beta-20",
+      "tipoTeste": "Elétrico",
+      "resultado": "Aprovado",
+      "data": "2025-10-15",
+      "obs": "Atualização de software necessária",
+      "funcResp": "Júlia"
+    },
+    {
+      "id": "i1j2",
+      "aeronave": "Gama-300",
+      "tipoTeste": "Hidráulico",
+      "resultado": "Aprovado",
+      "data": "2025-11-04",
+      "obs": "Teste de vibração excelente",
+      "funcResp": "Pedro"
+    },
+    {
+      "id": "0871",
+      "aeronave": "teste",
+      "tipoTeste": "aerodinamico",
+      "resultado": "aprovado",
+      "data": "2025-11-19",
+      "obs": "deu bom",
+      "funcResp": "ana"
+    }
+  ]
+}
