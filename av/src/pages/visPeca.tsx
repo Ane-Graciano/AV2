@@ -49,10 +49,28 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
             }
         this.PegaPecas = this.PegaPecas.bind(this)
         this.HandlePesquisa = this.HandlePesquisa.bind(this)
+        this.abreCadPeca = this.abreCadPeca.bind(this)
         this.abreEditaPeca = this.abreEditaPeca.bind(this)
     }
     componentDidMount(): void {
         this.PegaPecas()
+    }
+
+    abreCadPeca(e: React.MouseEvent) {
+        e.preventDefault()
+        this.setState({
+            conteudoModal: <CadPeca />,
+            modalAberto: true
+        })
+    }
+
+    abreEditaPeca(pecaParaEditar: pecas) {
+        this.setState({
+            conteudoModal: (
+                <CadPeca />
+            ),
+            modalAberto: true
+        })
     }
 
     async PegaPecas() {
@@ -98,14 +116,6 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
         });
     }
 
-    abreEditaPeca(pecaParaEditar: pecas) {
-        this.setState({
-            conteudoModal: (
-                <CadPeca />
-            ),
-            modalAberto: true
-        })
-    }
 
     FormataDadosPecas() {
         const dados = this.PegaPecasFiltradas();
@@ -149,8 +159,8 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
     }
 
     render() {
-        const { peca, erro } = this.state
-        const dadosFiltrados = this.PegaPecasFiltradas();
+        const { peca, erro, modalAberto, conteudoModal } = this.state
+        const dadosFiltrados = this.FormataDadosPecas();
         return (
             <>
                 <section className="w-screen h-screen grid grid-cols-[5%_95%]  overflow-x-hidden">
@@ -166,7 +176,7 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
                         </section>
                         <section className="flex justify-between w-[90%] m-auto mt-[3%] overflow-y-auto">
                             <h1 className="text-black font-bold text-4xl font-nunito">Peças</h1>
-                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]">+ Peças</button>
+                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadPeca}>+ Peças</button>
                         </section>
                         {erro && (
                             <div className="p-3 bg-red-100 text-red-700 border border-red-400 rounded">
@@ -184,6 +194,9 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
                         )}
                     </section>
                 </section>
+                <Modal aberto={modalAberto} onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })}>
+                    {conteudoModal}
+                </Modal>
             </>
         )
     }

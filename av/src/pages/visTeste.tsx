@@ -2,7 +2,8 @@ import { Component } from "react";
 import Tabela, { type Coluna } from "../components/tabela";
 import BarraPesquisa from "../components/barraPesquisa";
 import NavBar from "../components/navbar";
-
+import CadTeste from "./cadTeste";
+import Modal from "../components/modal";
 
 const url = "http://localhost:3000"
 
@@ -22,6 +23,8 @@ interface StateTeste {
     testes: teste[]
     pesquisa: string
     erro: string | null
+    modalAberto: boolean
+    conteudoModal: React.ReactNode
 }
 
 export default class VisTeste extends Component<PropsTeste, StateTeste> {
@@ -39,13 +42,24 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
             this.state = {
                 testes: [],
                 pesquisa: "",
-                erro: null
+                erro: null,
+                modalAberto: false,
+                conteudoModal: null
             }
         this.PegaTeste = this.PegaTeste.bind(this)
         this.HandlePesquisa = this.HandlePesquisa.bind(this)
+        this.abreCadTeste = this.abreCadTeste.bind(this)
     }
     componentDidMount(): void {
         this.PegaTeste()
+    }
+
+    abreCadTeste(e: React.MouseEvent) {
+        e.preventDefault()
+        this.setState({
+            conteudoModal: <CadTeste />,
+            modalAberto: true
+        })
     }
 
     async PegaTeste() {
@@ -93,7 +107,7 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
     }
 
     render() {
-        const { testes, erro } = this.state
+        const { testes, erro, modalAberto, conteudoModal } = this.state
         const dadosFiltrados = this.PegaTesteFiltradas();
         return (
             <>
@@ -110,7 +124,7 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
                         </section>
                         <section className="flex justify-between w-[90%] m-auto mt-[3%] overflow-y-auto">
                             <h1 className="text-black font-bold text-4xl font-nunito">Testes</h1>
-                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]">+ Testes</button>
+                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadTeste}>+ Testes</button>
                         </section>
                         {erro && (
                             <div className="p-3 bg-red-100 text-red-700 border border-red-400 rounded">
@@ -127,6 +141,9 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
                         )}
                     </section>
                 </section>
+                <Modal aberto={modalAberto} onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })}>
+                    {conteudoModal}
+                </Modal>
             </>
         )
     }

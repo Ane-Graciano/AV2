@@ -51,10 +51,19 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
             }
         this.PegaFunc = this.PegaFunc.bind(this)
         this.HandlePesquisa = this.HandlePesquisa.bind(this)
+        this.abreCadFunc = this.abreCadFunc.bind(this)
         this.abreEditaFunc = this.abreEditaFunc.bind(this)
     }
     componentDidMount(): void {
         this.PegaFunc()
+    }
+
+    abreCadFunc(e: React.MouseEvent) {
+        e.preventDefault()
+        this.setState({
+            conteudoModal: <CadFunc />,
+            modalAberto: true
+        })
     }
 
     abreEditaFunc(funcParaEditar: funcionarios) {
@@ -111,13 +120,13 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
     FormataDadosEtapas() {
         const dados = this.pegaFuncFiltrado();
 
-        return dados.map(func => ({
-            ...func,
+        return dados.map(f => ({
+            ...f,
 
             // Coluna (editar)
             editar: (
                 <button
-                    onClick={() => this.abreEditaFunc(func)}
+                    onClick={() => this.abreEditaFunc(f)}
                     className="p-2 bg-[#3a6ea5] text-white rounded text-xs hover:bg-blue-600 transition"
                 >
                     Editar ✏️
@@ -128,7 +137,7 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
 
     render() {
         const { func, erro, modalAberto, conteudoModal } = this.state
-        const dadosFiltrados = this.pegaFuncFiltrado();
+        const dadosFiltrados = this.FormataDadosEtapas();
         return (
             <>
                 <section className="w-screen h-screen grid grid-cols-[5%_95%]  overflow-x-hidden">
@@ -144,7 +153,7 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
                         </section>
                         <section className="flex justify-between w-[90%] m-auto mt-[3%] overflow-y-auto">
                             <h1 className="text-black font-bold text-4xl font-nunito">Funcionários</h1>
-                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-7 pr-7 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]">+ Funcionário</button>
+                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-7 pr-7 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadFunc}>+ Funcionário</button>
                         </section>
                         {erro && (
                             <div className="p-3 bg-red-100 text-red-700 border border-red-400 rounded">
