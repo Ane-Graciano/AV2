@@ -32,7 +32,7 @@ export default class Tabela extends Component<PropsTabela, StateTabela> {
                                 {this.props.colunas.map((col) => {
                                     const valor = d[col.accessor]
                                     return(
-                                        <td key={col.header} className="p-3 border-b-2 border-white">
+                                        <td key={col.header} className="p-3 border-b-2 border-white text-center">
                                             {valor}
                                         </td>
                                     )
