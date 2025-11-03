@@ -29,7 +29,7 @@ export default class BarraPesquisa extends Component<PropsBarraPesquisa,StateBar
     render(){
         return(
             <>
-            <InputLinha type="text" name="barraPesquisa" palceholder={this.props.placeholder} value={this.state.pesquisa} onChange={this.attPesquisa}/>
+            <InputLinha type="text" name="barraPesquisa" placeholder={this.props.placeholder} value={this.state.pesquisa} onChange={this.attPesquisa}/>
             </>
         )
     }
