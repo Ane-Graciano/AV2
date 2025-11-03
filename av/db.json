@@ -179,29 +179,29 @@
   ],
   "tipoPeca": [
     {
-      "id": 1,
+      "id": "1",
       "value": "nacional",
       "label": "Nacional"
     },
     {
-      "id": 2,
+      "id": "2",
       "value": "importada",
       "label": "Importada"
     }
   ],
   "statusPeca": [
     {
-      "id": 1,
+      "id": "1",
       "value": "emProducao",
       "label": "Em Produção"
     },
     {
-      "id": 2,
+      "id": "2",
       "value": "transporte",
       "label": "Transporte"
     },
     {
-      "id": 3,
+      "id": "3",
       "value": "pronta",
       "label": "Pronta"
     }
@@ -224,12 +224,12 @@
   ],
   "tipoAeronave": [
     {
-      "id": 1,
+      "id": "1",
       "value": "comercial",
       "label": "Comercial"
     },
     {
-      "id": 2,
+      "id": "2",
       "value": "militar",
       "label": "Militar"
     }
@@ -252,29 +252,29 @@
   ],
   "tipoTeste": [
     {
-      "id": 1,
+      "id": "1",
       "value": "eletrico",
       "label": "Eletrico"
     },
     {
-      "id": 2,
+      "id": "2",
       "value": "hidreaulico",
       "label": "Hidráulico"
     },
     {
-      "id": 3,
+      "id": "3",
       "value": "aerodinamico",
       "label": "Aerodinâmico"
     }
   ],
   "resultadoTeste": [
     {
-      "id": 1,
+      "id": "1",
       "value": "aprovado",
       "label": "Aprovado"
     },
     {
-      "id": 2,
+      "id": "2",
       "value": "reprovado",
       "label": "Reprovado"
     }
@@ -333,6 +333,15 @@
       "data": "2025-11-19",
       "obs": "deu bom",
       "funcResp": "ana"
+    },
+    {
+      "id": "67b2",
+      "aeronave": "teste",
+      "tipoTeste": "eletrico",
+      "resultado": "reprovado",
+      "data": "2025-11-20",
+      "obs": "deu ruim no trem",
+      "funcResp": "Higor"
     }
   ]
 }

@@ -2,6 +2,8 @@ import { Component } from "react";
 import Tabela, { type Coluna } from "../components/tabela";
 import BarraPesquisa from "../components/barraPesquisa";
 import NavBar from "../components/navbar";
+import CadFunc from "./cadFunc";
+import Modal from "../components/modal";
 
 
 const url = "http://localhost:3000"
@@ -23,6 +25,8 @@ interface StateTeste {
     func: funcionarios[]
     pesquisa: string
     erro: string | null
+    modalAberto: boolean
+    conteudoModal: React.ReactNode
 }
 
 export default class VisFunc extends Component<PropsTeste, StateTeste> {
@@ -41,13 +45,25 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
             this.state = {
                 func: [],
                 pesquisa: "",
-                erro: null
+                erro: null,
+                modalAberto: false,
+                conteudoModal: null
             }
         this.PegaFunc = this.PegaFunc.bind(this)
         this.HandlePesquisa = this.HandlePesquisa.bind(this)
+        this.abreEditaFunc = this.abreEditaFunc.bind(this)
     }
     componentDidMount(): void {
         this.PegaFunc()
+    }
+
+    abreEditaFunc(funcParaEditar: funcionarios) {
+        this.setState({
+            conteudoModal: (
+                <CadFunc />
+            ),
+            modalAberto: true
+        })
     }
 
     async PegaFunc() {
@@ -92,14 +108,32 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
         });
     }
 
+    FormataDadosEtapas() {
+        const dados = this.pegaFuncFiltrado();
+
+        return dados.map(func => ({
+            ...func,
+
+            // Coluna (editar)
+            editar: (
+                <button
+                    onClick={() => this.abreEditaFunc(func)}
+                    className="p-2 bg-[#3a6ea5] text-white rounded text-xs hover:bg-blue-600 transition"
+                >
+                    Editar ✏️
+                </button>
+            )
+        }));
+    }
+
     render() {
-        const { func, erro } = this.state
+        const { func, erro, modalAberto, conteudoModal } = this.state
         const dadosFiltrados = this.pegaFuncFiltrado();
         return (
             <>
                 <section className="w-screen h-screen grid grid-cols-[5%_95%]  overflow-x-hidden">
                     <section>
-                        <NavBar/>
+                        <NavBar />
                     </section>
                     <section className="">
                         <section className="mt-[3%] ml-[5%]">
@@ -128,6 +162,9 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
                         )}
                     </section>
                 </section>
+                <Modal aberto={modalAberto} onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })}>
+                    {conteudoModal}
+                </Modal>
             </>
         )
     }

@@ -24,7 +24,6 @@ interface StateEtapa {
     etapa: etapas[]
     pesquisa: string
     erro: string | null
-    navAberta: boolean
     modalAberto: boolean
     conteudoModal: React.ReactNode
 }
@@ -45,7 +44,6 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
                 etapa: [],
                 pesquisa: "",
                 erro: null,
-                navAberta: false,
                 modalAberto: false,
                 conteudoModal: null
             }
@@ -110,7 +108,6 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
 
     abreEditaEtapa(etapaParaEditar: etapas) {
         this.setState({
-            // Aqui você deve usar o componente que faz a edição, passando os dados da etapa
             conteudoModal: (
                 <CadEtapa />
             ),
@@ -193,7 +190,6 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
                                 <Tabela
                                     dados={dadosFiltrados}
                                     colunas={this.colunasPecas}>
-
                                 </Tabela>
                             </section>
                         )}

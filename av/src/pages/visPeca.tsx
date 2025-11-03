@@ -2,6 +2,8 @@ import { Component } from "react";
 import Tabela, { type Coluna } from "../components/tabela";
 import BarraPesquisa from "../components/barraPesquisa";
 import NavBar from "../components/navbar";
+import CadPeca from "./cadPeca";
+import Modal from "../components/modal";
 
 
 const url = "http://localhost:3000"
@@ -22,6 +24,8 @@ interface StatePeca {
     peca: pecas[]
     pesquisa: string
     erro: string | null
+    modalAberto: boolean
+    conteudoModal: React.ReactNode
 }
 
 export default class VisPeca extends Component<PropsPeca, StatePeca> {
@@ -39,10 +43,13 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
             this.state = {
                 peca: [],
                 pesquisa: "",
-                erro: null
+                erro: null,
+                modalAberto: false,
+                conteudoModal: null
             }
         this.PegaPecas = this.PegaPecas.bind(this)
         this.HandlePesquisa = this.HandlePesquisa.bind(this)
+        this.abreEditaPeca = this.abreEditaPeca.bind(this)
     }
     componentDidMount(): void {
         this.PegaPecas()
@@ -91,6 +98,56 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
         });
     }
 
+    abreEditaPeca(pecaParaEditar: pecas) {
+        this.setState({
+            conteudoModal: (
+                <CadPeca />
+            ),
+            modalAberto: true
+        })
+    }
+
+    FormataDadosPecas() {
+        const dados = this.PegaPecasFiltradas();
+
+        return dados.map(p => ({
+            ...p,
+
+            // Coluna  (novoStatus)
+            novoStatus: (
+                <div className="flex items-center space-x-2">
+                    {/* Você pode manter o SELECT nativo por simplicidade na tabela */}
+                    <select
+                        defaultValue={p.status}
+                        className="p-1 border rounded text-sm min-w-[100px]"
+                    // TODO: Adicionar um estado local para controlar o valor selecionado antes de Salvar
+                    >
+                        <option value="pendente">Pendente</option>
+                        <option value="em_progresso">Em Progresso</option>
+                        <option value="concluido">Concluído</option>
+                    </select>
+                    <button
+                        // TODO: Chamar o método this.AtualizarStatus(etapa.id, novoValor)
+                        onClick={() => console.log(`TODO: Salvar novo status para Etapa ID: ${p.id}`)}
+                        className="p-2 bg-[#3a6ea5] text-white rounded text-xs hover:bg-blue-600 transition"
+                    >
+                        Salvar
+                    </button>
+                </div>
+            ),
+
+            // Coluna (editar)
+            editar: (
+                <button
+                    onClick={() => this.abreEditaPeca(p)}
+                    className="p-2 bg-[#3a6ea5] text-white rounded text-xs hover:bg-blue-600 transition"
+                >
+                    Editar ✏️
+                </button>
+            )
+        }));
+    }
+
     render() {
         const { peca, erro } = this.state
         const dadosFiltrados = this.PegaPecasFiltradas();
@@ -98,7 +155,7 @@ export default class VisPeca extends Component<PropsPeca, StatePeca> {
             <>
                 <section className="w-screen h-screen grid grid-cols-[5%_95%]  overflow-x-hidden">
                     <section>
-                        <NavBar/>
+                        <NavBar />
                     </section>
                     <section className="">
                         <section className="mt-[3%] ml-[5%]">
