@@ -107,6 +107,15 @@
       "usuario": "vns",
       "senha": "vanessa",
       "nivel": "administrativo"
+    },
+    {
+      "id": "l5",
+      "nome": "Larissa",
+      "telefone": "(14) 93333-1111",
+      "endereco": "Bairro Antigo, 22",
+      "usuario": "lari",
+      "senha": "123",
+      "nivel": "engenheiro"
     }
   ],
   "nivelAcesso": [
