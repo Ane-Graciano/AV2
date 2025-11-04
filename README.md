@@ -2,16 +2,6 @@
 
 **AV2**
 
-## 🎯 Status do Projeto
-
----
-
-## 💻 Tecnologias Utilizadas
-
-Este projeto é dividido em Frontend (React).
-
----
-
 ## ⚙️ Pré-requisitos
 
 Para rodar este projeto, você precisará ter o seguinte instalado:
@@ -25,9 +15,9 @@ Para rodar este projeto, você precisará ter o seguinte instalado:
 ## 🛠️ Como Executar o Projeto Localmente
 Para logar:
 
-| Nível | Usuário | Senha | Acesso |
+| Nível | Usuário | Senha |
 | :--- | :--- | :--- | :--- |
-| **ADMINISTRADOR** | `ana` | `123` |  
+| **ADMINISTRADOR** | `ana` | `123` | 
 | **ENGENHEIRO** | `lari` | `123` |
 | **OPERADOR** | `lukas` | `123456` | 
 
