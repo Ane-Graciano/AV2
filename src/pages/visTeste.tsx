@@ -4,6 +4,7 @@ import BarraPesquisa from "../components/barraPesquisa";
 import NavBar from "../components/navbar";
 import CadTeste from "./cadTeste";
 import Modal from "../components/modal";
+import { getNivelAcesso } from "../utils/autenticacao";
 
 const url = "http://localhost:3000"
 
@@ -25,6 +26,7 @@ interface StateTeste {
     erro: string | null
     modalAberto: boolean
     conteudoModal: React.ReactNode
+    nivelAcesso: string
 }
 
 export default class VisTeste extends Component<PropsTeste, StateTeste> {
@@ -44,7 +46,8 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
                 pesquisa: "",
                 erro: null,
                 modalAberto: false,
-                conteudoModal: null
+                conteudoModal: null,
+                nivelAcesso: getNivelAcesso()
             }
         this.PegaTeste = this.PegaTeste.bind(this)
         this.HandlePesquisa = this.HandlePesquisa.bind(this)
@@ -52,6 +55,7 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
     }
     componentDidMount(): void {
         this.PegaTeste()
+        this.setState({ nivelAcesso: getNivelAcesso() })
     }
 
     abreCadTeste(e: React.MouseEvent) {
@@ -107,13 +111,15 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
     }
 
     render() {
-        const { testes, erro, modalAberto, conteudoModal } = this.state
+        const { testes, erro, modalAberto, conteudoModal, nivelAcesso } = this.state
         const dadosFiltrados = this.PegaTesteFiltradas();
         return (
             <>
                 <section className="w-screen h-screen grid grid-cols-[5%_95%]  overflow-x-hidden">
                     <section>
-                        <NavBar />
+                        {window.location.pathname !== '/login' && (
+                            <NavBar nivel={nivelAcesso} />
+                        )}
                     </section>
                     <section className="">
                         <section className="mt-[3%] ml-[5%]">

@@ -8,6 +8,7 @@ export type Coluna = {
 interface PropsTabela {
     dados: any[]
     colunas: Coluna[]
+    classname?: string
 }
 
 interface StateTabela { }
@@ -16,7 +17,7 @@ export default class Tabela extends Component<PropsTabela, StateTabela> {
     render() {
         return (
             <>
-                <table className="w-full overflow-hidden rounded-lg border-collapse">
+                <table className={`w-full overflow-hidden rounded-lg border-collapse ${this.props.classname}`}>
                     <thead className="bg-[#3a6ea5] text-white">
                         <tr>
                             {this.props.colunas.map((col, colIndex) => (

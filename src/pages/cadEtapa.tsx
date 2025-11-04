@@ -24,7 +24,11 @@ type op_func = {
 }
 
 
-interface PropsEtapa { }
+interface PropsEtapa {
+    etapaId?: number
+    aeronaveId?: number | null
+    onCadastroSucesso?: () => void;
+}
 
 interface StateEtapa {
     nome: string
@@ -57,21 +61,69 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
     componentDidMount(): void {
         this.PegaStatus()
         this.PegaFunc()
+        if (this.props.etapaId) {
+            this.pegaEtapa();
+        }else {
+            this.setState({ statusEtapa: "pendente" });
+        }
     }
 
-    async PegaStatus(){
+    pegaEtapa = async () => {
+        const { etapaId } = this.props;
+        try {
+            const response = await fetch(`${url}/etapa/${etapaId}`);
+
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.status}`);
+            }
+
+            const et = await response.json()
+
+            this.setState({
+                nome: et.nome,
+                prazo: et.prazo,
+                statusEtapa: et.statusEtapa,
+                funcSelecionado: et.funcSelecionado,
+                resp: null
+            });
+            console.log('etapa:', et)
+
+        } catch (error) {
+            this.setState({ resp: "Falha ao carregar dados das etapas, tente novamente mais tarde." });
+            console.error("Erro ao carregar as etapas:", error);
+        }
+    }
+
+    componentDidUpdate(prevProps: PropsEtapa) {
+        if (this.props.etapaId !== prevProps.etapaId && this.props.etapaId) {
+            this.pegaEtapa();
+        }
+    }
+
+    async PegaStatus() {
         try {
             const res = await fetch(`${url}/statusEtapa`)
+            const { etapaId } = this.props
+            const edicao = !!etapaId;
 
             if (!res.ok) {
                 throw new Error(`Erro ao buscar os status das etapas: ${res.status}`)
             }
 
             const dado_tipo: op[] = await res.json()
-            this.setState({
-                opEtapa: dado_tipo,
-                statusEtapa: "pendente"
-            })
+
+            if (!edicao) {
+                this.setState({
+                    opEtapa: dado_tipo,
+                    statusEtapa: "pendente"
+                })
+            } else {
+                this.setState({
+                    opEtapa: dado_tipo,
+                    statusEtapa: dado_tipo.length > 0 ? dado_tipo[0].value : ""
+                })
+            }
+
         } catch (err) {
             this.setState({
                 resp: {
@@ -89,18 +141,17 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
             if (!res.ok) {
                 throw new Error(`Erro ao buscar os funcionários cadastrados: ${res.status}`)
             }
-            
+
             const dado_bruto: op_func[] = await res.json()
 
             const opcoesFormatadas: op[] = dado_bruto.map(func => ({
                 value: func.nome,
                 label: func.nome,
                 id: func.id
-            }));
-
+            })) 
             this.setState({
                 opFunc: opcoesFormatadas,
-                funcSelecionado: []
+                funcSelecionado: this.props.etapaId ? this.state.funcSelecionado : [] 
             })
         } catch (err) {
             this.setState({
@@ -128,21 +179,40 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
         this.setState({ resp: null });
     }
 
-     async Enviar(e: React.FormEvent) {
+    Cancelar = () => {
+        this.setState({
+            resp: null
+        });
+        this.pegaEtapa();
+    }
+
+    async Enviar(e: React.FormEvent) {
         e.preventDefault();
 
-        const {nome, prazo, statusEtapa, funcSelecionado } = this.state
+        const { nome, prazo, statusEtapa, funcSelecionado } = this.state
+        const { etapaId,aeronaveId } = this.props
+
+        const edicao = !!etapaId;
+        const edit_cad = edicao ? `${url}/etapa/${etapaId}` : `${url}/etapa`;
+        const metodo = edicao ? 'PUT' : 'POST';
 
         const novaEtapa = {
             nome,
             prazo,
             statusEtapa,
             funcSelecionado
-        };
+        }
+        if (!edicao) {
+            if (!aeronaveId) {
+                alert("Erro: ID da aeronave não fornecido para o cadastro da etapa.");
+                return;
+            }
+            (novaEtapa as any).aeronaveId = aeronaveId; 
+        }
 
         try {
-            const response = await fetch(`${url}/etapa`, {
-                method: 'POST',
+            const response = await fetch(edit_cad, {
+                method: metodo,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -150,19 +220,28 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
             });
 
             if (!response.ok) {
-                throw new Error(`Erro no cadastro! Status: ${response.status}`);
+                throw new Error(`Erro no ${edicao ? 'edição' : 'cadastro'} Status: ${response.status}`)
             }
 
-            this.setState({
-                nome: "",
-                prazo: "",
-                statusEtapa: "pendente",
-                funcSelecionado: [],
-                resp: {
-                    message: "Funcionário cadastrado com sucesso!",
-                    type: 'success'
-                }
-            });
+            if (!edicao) {
+                this.setState({
+                    nome: "",
+                    prazo: "",
+                    statusEtapa: "pendente",
+                    funcSelecionado: [],
+                    resp: {
+                        message: "Etapa cadastrado com sucesso!",
+                        type: 'success'
+                    }
+                })
+            } else {
+                this.setState({
+                    resp: {
+                        message: "Etapa atualizado com sucesso!",
+                        type: 'success'
+                    }
+                })
+            }
         } catch (error) {
             console.error('Falha no POST:', error);
             this.setState({
@@ -174,12 +253,14 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
         }
     }
     render() {
-        const {nome, prazo, statusEtapa, opEtapa, funcSelecionado, opFunc, resp} = this.state
+        const { nome, prazo, statusEtapa, opEtapa, funcSelecionado, opFunc, resp } = this.state
+        const edicao = !!this.props.etapaId
+
         return (
             <>
                 <section className="w-full h-full flex justify-center items-center">
                     <section className="w-[80%] flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-bold text-4xl text-center mb-[7%]">Cadastro de Etapas</h1>
+                        <h1 className="text-[#3a6ea5] font-bold text-4xl text-center mb-[7%]">{`${!edicao ? 'Cadastro' : 'Edição'} `}</h1>
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
                                 {resp.message}
@@ -218,7 +299,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 onChange={this.Inputs}
                                 required
                                 classNameSelect="w-[500px]"
-                                disabled={true}
+                                disabled={!edicao ? true : false}
                             />
                             <DropBox
                                 name="Funcionarios"
@@ -226,12 +307,21 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 label="Funcionários Responsáveis"
                                 opcoes={opFunc}
                                 required
-                                onChange={this.handleFuncionarioChange} 
+                                onChange={this.handleFuncionarioChange}
                             />
-                            <section className="col-span-2 flex justify-center p-2 mt-5">
+                            <section className="col-span-2 flex flex-row-reverse justify-center gap-x-8 p-2 mt-5">
                                 <button id="botao-cad" className="w-[50%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
                                     Enviar
                                 </button>
+                                {edicao && (
+                                    <button
+                                        type="button"
+                                        onClick={this.Cancelar}
+                                        className="w-[50%] p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
+                                    >
+                                        Cancelar
+                                    </button>
+                                )}
                             </section>
                         </form>
                     </section>

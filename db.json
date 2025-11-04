@@ -1,13 +1,13 @@
 {
   "funcionarios": [
     {
-      "id": "503b",
-      "nome": "ana",
+      "nome": "Ana Elize",
       "telefone": "(11) 11111-1111",
       "endereco": "teste",
       "usuario": "ana",
       "senha": "123",
-      "nivel": "administrativo"
+      "nivel": "administrativo",
+      "id": "503b"
     },
     {
       "id": "2316",
@@ -128,14 +128,14 @@
   ],
   "etapa": [
     {
-      "id": "5209",
-      "nome": "Teste1",
+      "nome": "Teste1 modifica",
       "prazo": "2 dias",
-      "statusEtapa": "pendente",
+      "statusEtapa": "finalizada",
       "funcSelecionado": [
         "maria",
         "ana"
-      ]
+      ],
+      "id": "5209"
     },
     {
       "id": "6b30",
@@ -146,7 +146,8 @@
         "Pedro",
         "Bruno",
         "Gabriela"
-      ]
+      ],
+      "status": "em andamento"
     },
     {
       "id": "ca42",
@@ -208,11 +209,11 @@
   ],
   "pecas": [
     {
-      "id": "adb5",
       "nome": "teste",
       "tipo": "nacional",
       "fornecedor": "teste",
-      "status": "emProducao"
+      "status": "concluido",
+      "id": "adb5"
     },
     {
       "id": "a06a",
@@ -236,18 +237,32 @@
   ],
   "aeronave": [
     {
-      "id": "a332",
-      "modelo": "teste",
-      "tipo": "comercial",
-      "capacidade": "teste",
-      "alcance": "teste"
-    },
-    {
       "id": "1964",
       "modelo": "teste2",
       "tipo": "comercial",
       "capacidade": "1000",
       "alcance": "12"
+    },
+    {
+      "id": "1965",
+      "modelo": "Air-Comm 500",
+      "tipo": "comercial",
+      "capacidade": "350",
+      "alcance": "8500"
+    },
+    {
+      "id": "1966",
+      "modelo": "Mili-Jet Alpha",
+      "tipo": "militar",
+      "capacidade": "4",
+      "alcance": "3000"
+    },
+    {
+      "id": "1967",
+      "modelo": "CargoMax C-90",
+      "tipo": "cargueiro",
+      "capacidade": "50000",
+      "alcance": "15000"
     }
   ],
   "tipoTeste": [

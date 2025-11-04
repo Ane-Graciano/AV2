@@ -14,7 +14,9 @@ type op_nivelAcesso = {
     id?: number
 }
 
-interface PropsFunc { }
+interface PropsFunc {
+    funcId?: number
+}
 
 interface StateFunc {
     nome: string
@@ -47,7 +49,45 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
 
     componentDidMount(): void {
         this.PegaNivel();
+        if (this.props.funcId) {
+            this.pegaFunc();
+        }
     }
+
+    pegaFunc = async () => {
+        const { funcId } = this.props;
+        try {
+            const response = await fetch(`${url}/funcionarios/${funcId}`);
+
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.status}`);
+            }
+
+            const func = await response.json()
+
+            this.setState({
+                nome: func.nome,
+                telefone: func.telefone,
+                endereco: func.endereco,
+                usuario: func.usuario,
+                senha: func.senha,
+                nivel: func.nivel,
+                resp: null
+            });
+            console.log('funcionario:', func)
+
+        } catch (error) {
+            this.setState({ resp: "Falha ao carregar dados do funcionario, tente novamente mais tarde." });
+            console.error("Erro ao carregar cliente:", error);
+        }
+    }
+
+    componentDidUpdate(prevProps: PropsFunc) {
+        if (this.props.funcId !== prevProps.funcId && this.props.funcId) {
+            this.pegaFunc();
+        }
+    }
+
 
     async PegaNivel() {
         try {
@@ -87,11 +127,22 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
         this.setState({ resp: null });
     }
 
+    Cancelar = () => {
+        this.setState({
+            resp: null
+        });
+        this.pegaFunc();
+    }
 
     async Enviar(e: React.FormEvent) {
         e.preventDefault();
 
         const { nome, telefone, endereco, usuario, senha, nivel } = this.state;
+        const { funcId } = this.props
+
+        const edicao = !!funcId;
+        const edit_cad = edicao ? `${url}/funcionarios/${funcId}` : `${url}/funcionarios`;
+        const metodo = edicao ? 'PUT' : 'POST';
 
         const novoFuncionario = {
             nome,
@@ -103,8 +154,8 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
         };
 
         try {
-            const response = await fetch(`${url}/funcionarios`, {
-                method: 'POST',
+            const response = await fetch(edit_cad, {
+                method: metodo,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -112,23 +163,30 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
             });
 
             if (!response.ok) {
-                throw new Error(`Erro no cadastro! Status: ${response.status}`);
+                throw new Error(`Erro no ${edicao ? 'edição' : 'cadastro'} Status: ${response.status}`);
             }
 
-            // const data = await response.json();
-
-            this.setState({
-                nome: "",
-                telefone: "",
-                endereco: "",
-                usuario: "",
-                senha: "",
-                nivel: this.state.opNivel.length > 0 ? this.state.opNivel[0].value : "",
-                resp: {
-                    message: "Funcionário cadastrado com sucesso!",
-                    type: 'success'
-                }
-            });
+            if (!edicao) {
+                this.setState({
+                    nome: "",
+                    telefone: "",
+                    endereco: "",
+                    usuario: "",
+                    senha: "",
+                    nivel: this.state.opNivel.length > 0 ? this.state.opNivel[0].value : "",
+                    resp: {
+                        message: "Funcionário cadastrado com sucesso!",
+                        type: 'success'
+                    }
+                });
+            }else{
+                 this.setState({
+                    resp: {
+                        message: "Funcionário atualizado com sucesso!",
+                        type: 'success'
+                    }
+                });
+            }
 
         } catch (error) {
             console.error('Falha no POST:', error);
@@ -142,11 +200,12 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
     }
     render() {
         const { nome, telefone, endereco, usuario, senha, nivel, resp, opNivel } = this.state;
+        const edicao = !!this.props.funcId
         return (
             <>
                 <section className="w-full h-full flex justify-center items-center">
                     <section className=" flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-bold text-4xl text-center mb-[9%]">Cadastro de Funcionários</h1>
+                        <h1 className="text-[#3a6ea5] font-bold text-4xl text-center mb-[9%]">{`${!edicao ? 'Cadastro' : 'Edição'} `}</h1>
 
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
@@ -218,10 +277,19 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                                 onChange={this.Inputs}
                                 required
                             />
-                            <section className="col-span-2 flex justify-center p-2 mt-5">
-                                <button id="botao-cad" className="w-[40%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
-                                    Enviar
+                            <section className="col-span-2 flex flex-row-reverse justify-center gap-x-8 p-2 mt-5">
+                                <button id="botao-cad" className="w-[40%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b]">
+                                    {`${edicao ? 'Alterar' : 'Salvar'}`}
                                 </button>
+                                {edicao && (
+                                    <button
+                                        type="button"
+                                        onClick={this.Cancelar}
+                                        className="w-[40%] p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
+                                    >
+                                        Cancelar
+                                    </button>
+                                )}
                             </section>
                         </form>
                     </section>

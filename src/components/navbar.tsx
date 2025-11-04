@@ -13,9 +13,14 @@ import CadEtapa from "../pages/cadEtapa";
 import CadPeca from "../pages/cadPeca";
 import CadAeronave from "../pages/cadAeronave";
 import CadTeste from "../pages/cadTeste";
+import VisAeronave from "../pages/visAeronave";
+import VisEtapa from "../pages/visEtapa";
+import VisPeca from "../pages/visPeca";
+import VisFunc from "../pages/visFunc";
 
 
 interface NavBarProps {
+    nivel: string
 }
 
 interface NavBarState {
@@ -39,6 +44,10 @@ export default class NavBar extends Component<NavBarProps, NavBarState> {
         this.abreCadPeca = this.abreCadPeca.bind(this)
         this.abreCadAeronave = this.abreCadAeronave.bind(this)
         this.abreCadTeste = this.abreCadTeste.bind(this)
+        this.abreVisAeronave = this.abreVisAeronave.bind(this)
+        this.abreVisEtapa = this.abreVisEtapa.bind(this)
+        this.abreVisPeca = this.abreVisPeca.bind(this)
+        this.abreVisFunc = this.abreVisFunc.bind(this)
     }
 
     attNav() {
@@ -54,41 +63,74 @@ export default class NavBar extends Component<NavBarProps, NavBarState> {
             modalAberto: true
         })
     }
-
-    abreCadEtapa(e: React.MouseEvent){
+    abreVisFunc(e: React.MouseEvent) {
         e.preventDefault()
         this.setState({
-            conteudoModal: <CadEtapa/>,
+            conteudoModal: <VisFunc />,
             modalAberto: true
         })
     }
 
-    abreCadPeca(e: React.MouseEvent){
+    abreCadEtapa(e: React.MouseEvent) {
         e.preventDefault()
         this.setState({
-            conteudoModal: <CadPeca/>,
+            conteudoModal: <CadEtapa />,
+            modalAberto: true
+        })
+    }
+    abreVisEtapa(e: React.MouseEvent) {
+        e.preventDefault()
+        this.setState({
+            conteudoModal: <VisEtapa />,
             modalAberto: true
         })
     }
 
-    abreCadAeronave(e: React.MouseEvent){
+    abreCadPeca(e: React.MouseEvent) {
         e.preventDefault()
         this.setState({
-            conteudoModal: <CadAeronave/>,
+            conteudoModal: <CadPeca />,
+            modalAberto: true
+        })
+    }
+    abreVisPeca(e: React.MouseEvent) {
+        e.preventDefault()
+        this.setState({
+            conteudoModal: <VisPeca />,
             modalAberto: true
         })
     }
 
-    abreCadTeste(e: React.MouseEvent){
+    abreCadAeronave(e: React.MouseEvent) {
         e.preventDefault()
         this.setState({
-            conteudoModal: <CadTeste/>,
+            conteudoModal: <CadAeronave />,
+            modalAberto: true
+        })
+    }
+    abreVisAeronave(e: React.MouseEvent) {
+        e.preventDefault()
+        this.setState({
+            conteudoModal: <VisAeronave />,
+            modalAberto: true
+        })
+    }
+
+    abreCadTeste(e: React.MouseEvent) {
+        e.preventDefault()
+        this.setState({
+            conteudoModal: <CadTeste />,
             modalAberto: true
         })
     }
 
     render() {
         const { navAberta, modalAberto, conteudoModal } = this.state
+        const { nivel } = this.props
+
+        const soAdmin = nivel === 'administrativo'
+        const todos = nivel === 'administrativo' || nivel === 'engenheiro' || nivel === 'operador'
+        const podeCad = nivel === 'administrativo' || nivel === 'engenheiro'
 
         const IconeNav = navAberta ? FaChevronLeft : FaChevronRight
         return (
@@ -100,35 +142,71 @@ export default class NavBar extends Component<NavBarProps, NavBarState> {
                         <IconeNav size={10} className="text-[#135b78]" />
                     </button>
                     <section className="flex flex-col space-y-4">
-                        <NavLink to="/home" className={`flex`}>
-                            <TiHomeOutline size={30} className="text-[#135b78]" />
-                            {navAberta ? <p>Home</p> : null}
-                        </NavLink>
+                        {podeCad && (
+                            <>
+                                <NavLink to="/home" className={`flex`}>
+                                    <TiHomeOutline size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Home</p> : null}
+                                </NavLink>
+                                <NavLink to="#" className={`flex`} onClick={this.abreCadAeronave}>
+                                    <FaPlaneDeparture size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Cadastra Aeronave</p> : null}
+                                </NavLink>
+                                <NavLink to="/#" className={`flex`} onClick={this.abreCadPeca}>
+                                    <IoAirplaneOutline size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Cadastra Peça</p> : null}
+                                </NavLink>
+                                <NavLink to="/#" className={`flex`} onClick={this.abreCadEtapa}>
+                                    <FaClipboardList size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Cadastra Etapa</p> : null}
+                                </NavLink>
+                            </>
+                        )}
+                        {todos && (
+                            <>
+                                <NavLink to="/home" className={`flex`}>
+                                    <TiHomeOutline size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Home</p> : null}
+                                </NavLink>
+                                <NavLink to="/home" className={`flex`} onClick={this.abreCadTeste}>
+                                    <BsListCheck size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Registra Teste</p> : null}
+                                </NavLink>
+                                <NavLink to="/aeronaves" className={`flex`}>
+                                    <FaPlaneDeparture size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Lista Aeronave</p> : null}
+                                </NavLink>
+                                <NavLink to="/pecas" className={`flex`}>
+                                    <IoAirplaneOutline size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Lista Peça</p> : null}
+                                </NavLink>
+                                <NavLink to="/funcs" className={`flex`}>
+                                    <BsPersonAdd size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Lista Funcionário</p> : null}
+                                </NavLink>
+                                <NavLink to="/etapas" className={`flex`}>
+                                    <FaClipboardList size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Lista Etapa</p> : null}
+                                </NavLink>
+                                <NavLink to="/testes" className={`flex`}>
+                                    <FaClipboardList size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Lista Testes</p> : null}
+                                </NavLink>
+                            </>
+                        )}
 
-                        <NavLink to="#" className={`flex`} onClick={this.abreCadAeronave}>
-                            <FaPlaneDeparture size={30} className="text-[#135b78]"/>
-                            {navAberta ? <p>Cadastra Aeronave</p> : null}
-                        </NavLink>
-
-                        <NavLink to="/#" className={`flex`} onClick={this.abreCadPeca}>
-                            <IoAirplaneOutline size={30} className="text-[#135b78]" />
-                            {navAberta ? <p>Cadastra Peça</p> : null}
-                        </NavLink>
-
-                        <NavLink to="/#" className={`flex`} onClick={this.abreCadFunc}>
-                            <BsPersonAdd size={30} className="text-[#135b78]"/>
-                            {navAberta ? <p>Cadastrar Funcionário</p> : null}
-                        </NavLink>
-
-                        <NavLink to="/home" className={`flex`} onClick={this.abreCadTeste}>
-                            <BsListCheck size={30} className="text-[#135b78]" />
-                            {navAberta ? <p>Registra Teste</p> : null}
-                        </NavLink>
-
-                        <NavLink to="/#" className={`flex`} onClick={this.abreCadEtapa}>
-                            <FaClipboardList size={30} className="text-[#135b78]"/>
-                            {navAberta ? <p>Cadastra Etapa</p> : null}
-                        </NavLink>
+                        {soAdmin && (
+                            <>
+                                <NavLink to="/home" className={`flex`}>
+                                    <TiHomeOutline size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Home</p> : null}
+                                </NavLink>
+                                <NavLink to="/#" className={`flex`} onClick={this.abreCadFunc}>
+                                    <BsPersonAdd size={30} className="text-[#135b78]" />
+                                    {navAberta ? <p>Cadastrar Funcionário</p> : null}
+                                </NavLink>
+                            </>
+                        )}
                     </section>
                 </nav>
                 <Modal aberto={modalAberto} onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })}>
