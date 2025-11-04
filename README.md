@@ -16,7 +16,7 @@ Para rodar este projeto, você precisará ter o seguinte instalado:
 Para logar:
 
 | Nível | Usuário | Senha 
-| :--- | :--- | :--- | :--- 
+| :--- | :--- | :--- | :--- |
 | **ADMINISTRADOR** | `ana` | `123` 
 | **ENGENHEIRO** | `lari` | `123` 
 | **OPERADOR** | `lukas` | `123456` 
