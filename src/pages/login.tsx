@@ -1,7 +1,8 @@
 import { Component } from "react";
-// Assumindo que InputLinha e imgLogin estão no caminho correto
 import InputLinha from "../components/input";
 import imgLogin from "../assets/imgLogin.png"
+
+interface PropsLogin{}
 
 interface StateLogin {
     usuario: string;
@@ -12,8 +13,8 @@ interface StateLogin {
 const url = 'http://localhost:3000';
 const nivel = 'userNivelAcesso'
 
-export default class Login extends Component<{}, StateLogin> {
-    constructor(props: {}) {
+export default class Login extends Component<PropsLogin, StateLogin> {
+    constructor(props: PropsLogin) {
         super(props);
         this.state = {
             usuario: '',
@@ -21,28 +22,28 @@ export default class Login extends Component<{}, StateLogin> {
             erro: '',
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.Enviar = this.Enviar.bind(this);
     }
 
-    handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value } as Pick<StateLogin, 'usuario' | 'senha'>);
+    handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target
+        this.setState({ [name]: value } as Pick<StateLogin, 'usuario' | 'senha'>)
     }
 
-    async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
+    async Enviar(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
 
-        const { usuario, senha } = this.state;
+        const { usuario, senha } = this.state
         const rotaHome = '/home';
 
         try {
-            const response = await fetch(`${url}/funcionarios?usuario=${usuario}`);
+            const resp = await fetch(`${url}/funcionarios?usuario=${usuario}`);
             
-            if (!response.ok) {
+            if (!resp.ok) {
                 throw new Error('Erro na comunicação com a API.');
             }
 
-            const funcionarios = await response.json();
+            const funcionarios = await resp.json();
             
             if (funcionarios.length > 0 && funcionarios[0].senha === senha) {
                 this.setState({ erro: '' }); 
@@ -63,14 +64,14 @@ export default class Login extends Component<{}, StateLogin> {
         const { erro, usuario, senha } = this.state;
         return (
             <>
-                <section className="w-screen h-screen grid grid-cols-[40%_60%]">
-                    <section>
+                <section style={{backgroundImage: `url("${imgLogin}")`, backgroundSize: 'cover',backgroundPosition: 'center',backgroundRepeat: 'no-repeat'}} className="w-screen h-screen sm:h-[80vh] md:h-screen" >
+                    {/* <section className="w-screen h-screen">
                         <img src={imgLogin} alt="imagem avião" className="w-full h-full" />
-                    </section>
-                    <section>
-                        <form onSubmit={this.handleSubmit} className="bg-gray-100 w-full h-full flex flex-col justify-center items-center">
-                            <h1 className="text-[#135b78] font-bold text-3xl mb-8">Seja Bem Vindo ao Aerocode</h1>
-                            <section className="bg-white rounded-4xl p-5 w-[70%] h-[60%] flex flex-col justify-center items-center space-y-4">
+                    </section> */}
+                    <section className="flex flex-col justify-center items-center h-full">
+                        <form onSubmit={this.Enviar} className="sm:w-[60%] sm:h-[90%] sm:p-5 md:w-[50%] md:h-[80%] md:p-4 lg:w-[40%] lg:h-[70%] lg:p-3 flex flex-col justify-center items-center m-auto bg-transparent backdrop-blur rounded-4xl shadow-2xl">
+                            <h1 className="text-[#135b78] sm:font-medium sm:text-xl md:font-semibold md:text-2xl lg:font-bold lg:text-3xl mb-8">Seja Bem Vindo ao Aerocode</h1>
+                            <section className="rounded-4xl p-5 w-[70%] h-[60%] flex flex-col justify-center items-center space-y-4">
                                 {erro && (
                                     <p className="text-red-600 text-sm font-semibold p-2 border border-red-300 bg-red-50 rounded w-full text-center">
                                         {erro}
