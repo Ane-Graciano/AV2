@@ -83,6 +83,7 @@ export default class Login extends Component<PropsLogin, StateLogin> {
                                     placeholder="" 
                                     onChange={this.handleChange} 
                                     value={usuario}
+                                    classNameInput="sm:w-[250px] md:w-[300px] lg:w-[400px]"
                                 >
                                     Usuário
                                 </InputLinha>
@@ -92,10 +93,11 @@ export default class Login extends Component<PropsLogin, StateLogin> {
                                     placeholder="" 
                                     onChange={this.handleChange} 
                                     value={senha} 
+                                    classNameInput="sm:w-[250px] md:w-[300px] lg:w-[400px]"
                                 >
                                     Senha
                                 </InputLinha>
-                                <button type="submit" className="w-[50%] mt-[10%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">Entrar</button>
+                                <button type="submit" className="w-full mt-[10%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">Entrar</button>
                             </section>
                         </form>
                     </section>

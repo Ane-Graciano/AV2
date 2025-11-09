@@ -231,7 +231,7 @@ export default class CadPeca extends Component<PropsPeca, StatePeca> {
             <>
                 <section className="w-full h-full flex justify-center items-center">
                     <section className="w-[80%] flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-bold text-4xl text-center mb-[7%]">{`${!edicao ? 'Cadastro' : 'Edição'} `}</h1>
+                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center">{`${!edicao ? 'Cadastrar Peça' : 'Edição'} `}</h1>
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
                                 {resp.message}
@@ -246,7 +246,7 @@ export default class CadPeca extends Component<PropsPeca, StatePeca> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[500px]"
+                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Nome
                             </InputLinha>
@@ -257,7 +257,7 @@ export default class CadPeca extends Component<PropsPeca, StatePeca> {
                                 opcoes={opTipo}
                                 onChange={this.Inputs}
                                 required
-                                classNameSelect="w-[500px]"
+                                classNameSelect="w-[300px] md:w-[400px] lg:w-[500px]"
                             />
                             <InputLinha
                                 type="text"
@@ -267,7 +267,7 @@ export default class CadPeca extends Component<PropsPeca, StatePeca> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[500px]"
+                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Fornecedor
                             </InputLinha>
@@ -278,7 +278,7 @@ export default class CadPeca extends Component<PropsPeca, StatePeca> {
                                 onChange={this.Inputs}
                                 opcoes={opStatus}
                                 required
-                                classNameSelect="w-[500px]"
+                                classNameSelect="w-[300px] md:w-[400px] lg:w-[500px]"
                                 disabled={!edicao ? true : false}
                             />
                             <section className="col-span-2 flex flex-row-reverse justify-center gap-x-8 p-2 mt-5">
@@ -289,7 +289,7 @@ export default class CadPeca extends Component<PropsPeca, StatePeca> {
                                     <button
                                         type="button"
                                         onClick={this.Cancelar}
-                                        className="w-[50%] p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
+                                        className="w-[50%] p-1 md:p-2 lg:p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
                                     >
                                         Cancelar
                                     </button>

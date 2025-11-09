@@ -205,7 +205,7 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
             <>
                 <section className="w-full h-full flex justify-center items-center">
                     <section className=" flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-bold text-4xl text-center mb-[9%]">{`${!edicao ? 'Cadastro' : 'Edição'} `}</h1>
+                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mb-[9%]">{`${!edicao ? 'Cadastro' : 'Edição'} `}</h1>
 
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
@@ -221,6 +221,7 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                                 placeholder=""
                                 required
                                 onChange={this.Inputs}
+                                classNameInput="w-full lg:w-[300px]"
                             >
                                 Nome
                             </InputLinha>
@@ -235,6 +236,7 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                                 required
                                 maxLength={15}
                                 onChange={this.Inputs}
+                                classNameInput="w-full lg:w-[300px]"
                             />
                             <InputLinha
                                 type="text"
@@ -244,6 +246,7 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                                 placeholder=""
                                 required
                                 onChange={this.Inputs}
+                                classNameInput="w-full lg:w-[300px]"
                             >
                                 Endereço
                             </InputLinha>
@@ -255,6 +258,7 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
+                                classNameInput="w-full lg:w-[300px]"
                             >
                                 Usuário
                             </InputLinha>
@@ -266,6 +270,7 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                                 placeholder=""
                                 required
                                 onChange={this.Inputs}
+                                classNameInput="w-full lg:w-[300px]"
                             >
                                 Senha
                             </InputLinha>
@@ -276,9 +281,10 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                                 opcoes={opNivel}
                                 onChange={this.Inputs}
                                 required
+                                classNameSelect="w-full lg:w-[300px]"
                             />
                             <section className="col-span-2 flex flex-row-reverse justify-center gap-x-8 p-2 mt-5">
-                                <button id="botao-cad" className="w-[40%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b]">
+                                <button id="botao-cad" className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b]">
                                     {`${edicao ? 'Alterar' : 'Salvar'}`}
                                 </button>
                                 {edicao && (

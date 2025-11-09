@@ -260,7 +260,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
             <>
                 <section className="w-full h-full flex justify-center items-center">
                     <section className="w-[80%] flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-bold text-4xl text-center mb-[7%]">{`${!edicao ? 'Cadastro' : 'Edição'} `}</h1>
+                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mb-[7%]">{`${!edicao ? 'Cadastrar Etapa' : 'Edição'} `}</h1>
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
                                 {resp.message}
@@ -275,7 +275,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[500px]"
+                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Nome
                             </InputLinha>
@@ -287,7 +287,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[500px]"
+                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Prazo
                             </InputLinha>
@@ -298,7 +298,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 opcoes={opEtapa}
                                 onChange={this.Inputs}
                                 required
-                                classNameSelect="w-[500px]"
+                                classNameSelect="w-[300px] md:w-[400px] lg:w-[500px]"
                                 disabled={!edicao ? true : false}
                             />
                             <DropBox
