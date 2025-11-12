@@ -247,15 +247,16 @@ export default class CadTeste extends Component<PropsTeste, StateTeste> {
         const { aeronave, tipoTeste, resultado, data, obs, funcResp, opAeronave, opFunc, opResult, opTeste, resp } = this.state
         return (
             <>
-                <section className="w-full h-full flex justify-center items-center">
-                    <section className=" flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mb-[9%]">Cadastro de Teste</h1>
+                <section className="w-full h-full flex justify-center items-center overflow-y-auto md:overflow-hidden">
+                    <section className="h-full p-3">
+                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mt-0">Cadastro de Teste</h1>
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
                                 {resp.message}
                             </div>
                         )}
-                        <form onSubmit={this.Enviar} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-12 gap-y-7 ">
+                        <form onSubmit={this.Enviar} className="flex flex-col space-y-5 mt-3 md:mt-5 lg:mt-12">
+                            <section className="space-y-5 md:flex md:flex-row md:space-x-10">
                                 <SelectLinha
                                     name="aeronave"
                                     value={aeronave}
@@ -263,7 +264,7 @@ export default class CadTeste extends Component<PropsTeste, StateTeste> {
                                     opcoes={opAeronave}
                                     onChange={this.Inputs}
                                     required
-                                    classNameSelect="w-full lg:w-[300px]"
+                                    classNameSelect="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
                                 />
                                 <SelectLinha
                                     name="tipoTeste"
@@ -272,8 +273,10 @@ export default class CadTeste extends Component<PropsTeste, StateTeste> {
                                     opcoes={opTeste}
                                     onChange={this.Inputs}
                                     required
-                                    classNameSelect="w-full lg:w-[300px]"
+                                    classNameSelect="w-full sm:w-[300px] md:w-[200px] lg:w-[300px] "
                                 />
+                            </section>
+                            <section className="space-y-5 md:flex md:flex-row md:space-x-10">
                                 <SelectLinha
                                     name="resultado"
                                     value={resultado}
@@ -281,7 +284,7 @@ export default class CadTeste extends Component<PropsTeste, StateTeste> {
                                     opcoes={opResult}
                                     onChange={this.Inputs}
                                     required
-                                    classNameSelect="w-full lg:w-[300px]"
+                                    classNameSelect="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
                                 />
                                 <InputLinha
                                     type="date"
@@ -291,10 +294,12 @@ export default class CadTeste extends Component<PropsTeste, StateTeste> {
                                     placeholder=""
                                     onChange={this.Inputs}
                                     required
-                                    classNameInput="w-full lg:w-[300px]"
+                                    classNameInput="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
                                 >
                                     data do Teste
-                                </InputLinha>                       
+                                </InputLinha>
+                            </section>
+                            <section className="space-y-5 md:space-y-0 lg:space-y-5 md:flex md:flex-row md:space-x-10">
                                 <InputLinha
                                     type="text"
                                     name="obs"
@@ -303,10 +308,10 @@ export default class CadTeste extends Component<PropsTeste, StateTeste> {
                                     placeholder=""
                                     onChange={this.Inputs}
                                     required
-                                    classNameInput="w-full lg:w-[300px]"
+                                    classNameInput="w-full sm:w-w-[300px] md:w-[200px] lg:w-[300px]"
                                 >
                                     Observação
-                                </InputLinha>                                                     
+                                </InputLinha>
                                 <SelectLinha
                                     name="funcResp"
                                     value={funcResp}
@@ -314,10 +319,11 @@ export default class CadTeste extends Component<PropsTeste, StateTeste> {
                                     opcoes={opFunc}
                                     onChange={this.Inputs}
                                     required
-                                    classNameSelect="w-full lg:w-[300px]"
-                                />                           
+                                    classNameSelect="w-full sm:w-w-[300px] md:w-[200px] lg:w-[300px]"
+                                />
+                            </section>
                             <section className="col-span-2 flex justify-center p-2 mt-5">
-                                <button id="botao-cad" className="w-[40%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
+                                <button id="botao-cad" className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea5] rounded-[20px] text-white font-medium text-sm md:font-semibold md:text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
                                     Enviar
                                 </button>
                             </section>

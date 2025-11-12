@@ -8,47 +8,10 @@ import DetalhesAero from "../components/detalheAeronave";
 import CadPeca from "./cadPeca";
 import { getNivelAcesso } from "../utils/autenticacao";
 import CadEtapa from "./cadEtapa";
+import { type aeronaves, type etapa, type peca, type teste } from "../types";
 
 
 const url = "http://localhost:3000"
-
-
-export type aeronaves = {
-    modelo: string
-    tipo: string
-    capacidade: string
-    alcance: string
-    id: number
-}
-
-export type etapa = {
-    id: number
-    nome: string
-    prazo: string
-    status: string
-    funcSelecionado: string[]
-    idAeronave: number
-}
-
-export type peca = {
-    id: number
-    nome: string
-    tipo: string
-    fornecedor: string
-    status: string
-    idAeronave: number
-}
-
-export type teste = {
-    id: number
-    aeronave: string
-    tipo: string
-    resultado: string
-    data: string
-    obs: string
-    func: string
-    idAeronave: number
-}
 
 interface PropsPeca {
 }
@@ -368,28 +331,28 @@ export default class VisAeronave extends Component<PropsPeca, StateAero> {
                     </section>
                     <section>
                         {!mostraDetalhe && (
-                            <section className="mt-[3%] ml-[5%]">
+                            <section className="mt-[15%] ml-[5%] mb-[10%] sm:mt[5%] sm:mb-[4%] md:mt-[5%] md:mb-[5%] lg:mt-[2%] lg:mb-[5%]">
                                 <BarraPesquisa
                                     onPesquisa={this.HandlePesquisa}
-                                    placeholder="Buscar por nome, usuáario ou nível..."
+                                    placeholder="🔍 Buscar por modelo, tipo"
                                 />
                             </section>
                         )}
                         <section className="flex justify-between w-[90%] m-auto mt-[3%]">
-                            <h1 className="text-black font-bold text-4xl font-nunito">
+                            <h1 className={`text-black font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl font-nunito ${mostraDetalhe ? ` mt-14 md:mt-5 ` : ``}`}>
                                 {mostraDetalhe ? `Detalhes: ${aeroDetalhe?.modelo}` : 'Aeronaves'}
                             </h1>
 
                             {mostraDetalhe ? (
                                 <button
-                                    className="bg-gray-500 text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-gray-700 cursor-pointer hover:border-gray-900"
+                                    className="bg-gray-500 text-white font-nunito font-semibold text-sm md:text-lg mt-14 md:mt-5 p-1 md:p-2 lg:p-2 rounded-3xl pl-10 pr-10 md:pl-14 md:pr-14 lg:pl-14 lg:pr-14 border-2 border-gray-700 cursor-pointer hover:border-gray-900"
                                     onClick={this.voltarLista}
                                 >
                                     Voltar à Lista
                                 </button>
                             ) : (
                                 podeModificar && (
-                                    <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadAeronave}>
+                                    <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm md:text-lg p-1 md:p-2 lg:p-2 rounded-3xl pl-10 pr-10 md:pl-14 md:pr-14 lg:pl-14 lg:pr-14 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadAeronave}>
                                         + aeronaves
                                     </button>
                                 )
@@ -400,24 +363,19 @@ export default class VisAeronave extends Component<PropsPeca, StateAero> {
                                 Erro: {erro}
                             </div>
                         )}
-                        <section className={`flex ${mostraDetalhe ? 'flex-row' : 'flex-col'} mt-[3%] ml-[5%] mr-[5%]`}>
-
-                            <div
-                                className={`
-                                ${mostraDetalhe ? 'w-1/2 p-2' : 'w-full'} 
-                                ${!mostraDetalhe && 'mb-[5%]'} 
-                            `}
-                            >
-                                {!erro && aeronave.length > 0 && (
-                                    <Tabela
-                                        dados={dadosFiltrados}
-                                        colunas={this.colunasAero}>
-                                    </Tabela>
-                                )}
-                            </div>
-
+                        <section className={`flex ${mostraDetalhe ? 'flex-col md:flex-row' : 'flex-col'} mt-[3%] ml-[5%] mr-[5%]`}>
+                            {(!mostraDetalhe || (mostraDetalhe)) && (
+                                <div className={`w-full ${mostraDetalhe ? 'hidden md:block md:w-1/2 md:pr-2' : 'mb-[5%]'}`}>
+                                    {!erro && aeronave.length > 0 && (
+                                        <Tabela
+                                            dados={dadosFiltrados}
+                                            colunas={this.colunasAero}>
+                                        </Tabela>
+                                    )}
+                                </div>
+                            )}
                             {mostraDetalhe && (
-                                <div className="w-1/2 p-2 border-l border-gray-300 max-h-screen overflow-auto">
+                                <div className="w-full md:w-1/2 p-2 md:border-l border-gray-300 max-h-screen overflow-auto">
                                     <DetalhesAero
                                         aeronave={aeroDetalhe!}
                                         etapas={etapas}

@@ -61,13 +61,16 @@ export default class Login extends Component<PropsLogin, StateLogin> {
     }
 
     render() {
-        const { erro, usuario, senha } = this.state;
+        const { erro, usuario, senha } = this.state
+        const bgImageStyle = {
+            backgroundImage: `url("${imgLogin}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+        }
         return (
             <>
-                <section style={{backgroundImage: `url("${imgLogin}")`, backgroundSize: 'cover',backgroundPosition: 'center',backgroundRepeat: 'no-repeat'}} className="w-screen h-screen sm:h-[80vh] md:h-screen" >
-                    {/* <section className="w-screen h-screen">
-                        <img src={imgLogin} alt="imagem avião" className="w-full h-full" />
-                    </section> */}
+                <section style={window.innerWidth >= 768 ? bgImageStyle : {}} className="w-screen h-screen bg-gray-100" >
                     <section className="flex flex-col justify-center items-center h-full">
                         <form onSubmit={this.Enviar} className="sm:w-[60%] sm:h-[90%] sm:p-5 md:w-[50%] md:h-[80%] md:p-4 lg:w-[40%] lg:h-[70%] lg:p-3 flex flex-col justify-center items-center m-auto bg-transparent backdrop-blur rounded-4xl shadow-2xl">
                             <h1 className="text-[#135b78] sm:font-medium sm:text-xl md:font-semibold md:text-2xl lg:font-bold lg:text-3xl mb-8">Seja Bem Vindo ao Aerocode</h1>

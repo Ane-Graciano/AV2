@@ -122,15 +122,15 @@ export default class VisTeste extends Component<PropsTeste, StateTeste> {
                         )}
                     </section>
                     <section className="">
-                        <section className="mt-[3%] ml-[5%]">
+                        <section className="mt-[15%] ml-[5%] mb-[10%] sm:mt[5%] sm:mb-[4%] md:mt-[5%] md:mb-[5%] lg:mt-[2%] lg:mb-[5%]">
                             <BarraPesquisa
                                 onPesquisa={this.HandlePesquisa}
-                                placeholder="Buscar por nome, usuáario ou nível..."
+                                placeholder="Buscar por aeronave, tipo de teste, resultado, funcionario ou data"                               
                             />
                         </section>
                         <section className="flex justify-between w-[90%] m-auto mt-[3%] overflow-y-auto">
-                            <h1 className="text-black font-bold text-4xl font-nunito">Testes</h1>
-                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadTeste}>+ Testes</button>
+                            <h1 className="text-black font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl font-nunito">Testes</h1>
+                            <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm md:text-lg  p-1 md:p-2 lg:p-2 rounded-3xl pl-10 pr-10 md:pl-14 md:pr-14 lg:pl-14 lg:pr-14 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadTeste}>+ Testes</button>
                         </section>
                         {erro && (
                             <div className="p-3 bg-red-100 text-red-700 border border-red-400 rounded">

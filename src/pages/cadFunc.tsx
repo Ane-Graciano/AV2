@@ -179,8 +179,8 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
                         type: 'success'
                     }
                 });
-            }else{
-                 this.setState({
+            } else {
+                this.setState({
                     resp: {
                         message: "Funcionário atualizado com sucesso!",
                         type: 'success'
@@ -203,95 +203,100 @@ export default class CadFunc extends Component<PropsFunc, StateFunc> {
         const edicao = !!this.props.funcId
         return (
             <>
-                <section className="w-full h-full flex justify-center items-center">
-                    <section className=" flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mb-[9%]">{`${!edicao ? 'Cadastro' : 'Edição'} `}</h1>
-
+                <section className="w-full h-full flex justify-center items-center overflow-y-auto md:overflow-hidden">
+                    <section className="h-full p-3">
+                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mt-0">{`${!edicao ? 'Cadastrar Funcionário' : 'Editar Funcionário'} `}</h1>
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
                                 {resp.message}
                             </div>
                         )}
-                        <form onSubmit={this.Enviar} className="grid grid-cols-2 gap-x-15 gap-y-7 ">
-                            <InputLinha
-                                type="text"
-                                name="nome"
-                                value={nome}
-                                htmlfor="nome"
-                                placeholder=""
-                                required
-                                onChange={this.Inputs}
-                                classNameInput="w-full lg:w-[300px]"
-                            >
-                                Nome
-                            </InputLinha>
-                            <InputMask
-                                label="Telefone"
-                                name="telefone"
-                                value={telefone}
-                                htmlor="telefone"
-                                id="telefone"
-                                mask="(00) 00000-0000"
-                                placeholder=""
-                                required
-                                maxLength={15}
-                                onChange={this.Inputs}
-                                classNameInput="w-full lg:w-[300px]"
-                            />
-                            <InputLinha
-                                type="text"
-                                name="endereco"
-                                value={endereco}
-                                htmlfor="endereco"
-                                placeholder=""
-                                required
-                                onChange={this.Inputs}
-                                classNameInput="w-full lg:w-[300px]"
-                            >
-                                Endereço
-                            </InputLinha>
-                            <InputLinha
-                                type="text"
-                                name="usuario"
-                                value={usuario}
-                                htmlfor="usuario"
-                                placeholder=""
-                                onChange={this.Inputs}
-                                required
-                                classNameInput="w-full lg:w-[300px]"
-                            >
-                                Usuário
-                            </InputLinha>
-                            <InputLinha
-                                type="password"
-                                name="senha"
-                                value={senha}
-                                htmlfor="senha"
-                                placeholder=""
-                                required
-                                onChange={this.Inputs}
-                                classNameInput="w-full lg:w-[300px]"
-                            >
-                                Senha
-                            </InputLinha>
-                            <SelectLinha
-                                name="nivel"
-                                value={nivel}
-                                label="Nível de Acesso"
-                                opcoes={opNivel}
-                                onChange={this.Inputs}
-                                required
-                                classNameSelect="w-full lg:w-[300px]"
-                            />
+                        <form onSubmit={this.Enviar} className="flex flex-col space-y-5 mt-3 md:mt-5 lg:mt-12">
+                            <section className="space-y-5 md:flex md:flex-row md:space-x-10">
+                                <InputLinha
+                                    type="text"
+                                    name="nome"
+                                    value={nome}
+                                    htmlfor="nome"
+                                    placeholder=""
+                                    required
+                                    onChange={this.Inputs}
+                                    classNameInput="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                >
+                                    Nome
+                                </InputLinha>
+                                <InputMask
+                                    label="Telefone"
+                                    name="telefone"
+                                    value={telefone}
+                                    htmlor="telefone"
+                                    id="telefone"
+                                    mask="(00) 00000-0000"
+                                    placeholder=""
+                                    required
+                                    maxLength={15}
+                                    onChange={this.Inputs}
+                                    classNameInput="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                />
+                            </section>
+                            <section className="space-y-5 md:flex md:flex-row md:space-x-10">
+                                <InputLinha
+                                    type="text"
+                                    name="endereco"
+                                    value={endereco}
+                                    htmlfor="endereco"
+                                    placeholder=""
+                                    required
+                                    onChange={this.Inputs}
+                                    classNameInput="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                >
+                                    Endereço
+                                </InputLinha>
+                                <InputLinha
+                                    type="text"
+                                    name="usuario"
+                                    value={usuario}
+                                    htmlfor="usuario"
+                                    placeholder=""
+                                    onChange={this.Inputs}
+                                    required
+                                    classNameInput="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                >
+                                    Usuário
+                                </InputLinha>
+                            </section>
+                            <section className="space-y-5 md:space-y-0 lg:space-y-5 md:flex md:flex-row md:space-x-10">
+                                <InputLinha
+                                    type="password"
+                                    name="senha"
+                                    value={senha}
+                                    htmlfor="senha"
+                                    placeholder=""
+                                    required
+                                    onChange={this.Inputs}
+                                    classNameInput="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                >
+                                    Senha
+                                </InputLinha>
+                                <SelectLinha
+                                    name="nivel"
+                                    value={nivel}
+                                    label="Nível de Acesso"
+                                    opcoes={opNivel}
+                                    onChange={this.Inputs}
+                                    required
+                                    classNameSelect="w-full sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                />
+                            </section>
                             <section className="col-span-2 flex flex-row-reverse justify-center gap-x-8 p-2 mt-5">
-                                <button id="botao-cad" className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b]">
+                                <button id="botao-cad" className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea5] rounded-[20px] text-white font-medium text-sm md:font-semibold md:text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b]">
                                     {`${edicao ? 'Alterar' : 'Salvar'}`}
                                 </button>
                                 {edicao && (
                                     <button
                                         type="button"
                                         onClick={this.Cancelar}
-                                        className="w-[40%] p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
+                                        className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-medium text-sm md:font-semibold md:text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
                                     >
                                         Cancelar
                                     </button>

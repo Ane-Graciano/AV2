@@ -134,7 +134,7 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
                         onClick={() => this.abreEditaFunc(f)}
                         className="p-2 bg-[#3a6ea5] text-white rounded text-xs hover:bg-blue-600 transition"
                     >
-                        Editar ✏️
+                        Editar
                     </button>
                 )
             }else {
@@ -154,23 +154,23 @@ export default class VisFunc extends Component<PropsTeste, StateTeste> {
         const podeModificar = nivelAcesso === 'administrativo' 
         return (
             <>
-                <section className="w-screen h-screen grid grid-cols-[5%_95%]  overflow-x-hidden">
+                <section className="w-screen h-screen grid grid-cols-[5%_95%] overflow-x-hidden">
                     <section>
                         {window.location.pathname !== '/login' && (
                             <NavBar nivel={nivelAcesso} />
                         )}
                     </section>
                     <section className="">
-                        <section className="mt-[3%] ml-[5%]">
+                        <section className="mt-[15%] ml-[5%] mb-[10%] sm:mt[5%] sm:mb-[4%] md:mt-[5%] md:mb-[5%] lg:mt-[2%] lg:mb-[5%]">
                             <BarraPesquisa
                                 onPesquisa={this.HandlePesquisa}
-                                placeholder="Buscar por nome, usuáario ou nível..."
+                                placeholder="Buscar por nome, usuário ou nível"
                             />
                         </section>
                         <section className="flex justify-between w-[90%] m-auto mt-[3%]">
-                            <h1 className="text-black font-bold text-4xl font-nunito">Funcionários</h1>
+                            <h1 className="text-black font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl font-nunito">Funcionários</h1>
                             {podeModificar && (
-                                <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-7 pr-7 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadFunc}>+ Funcionário</button>
+                                <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm md:text-lg  p-1 md:p-2 lg:p-2 rounded-3xl pl-10 pr-10 md:pl-14 md:pr-14 lg:pl-14 lg:pr-14 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadFunc}>+ Funcionário</button>
                             )}
                         </section>
                         {erro && (

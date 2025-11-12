@@ -116,6 +116,24 @@
       "usuario": "lari",
       "senha": "123",
       "nivel": "engenheiro"
+    },
+    {
+      "id": "34cf",
+      "nome": "teste",
+      "telefone": "(22) 22222-2222",
+      "endereco": "teste",
+      "usuario": "teste",
+      "senha": "123",
+      "nivel": "engenheiro"
+    },
+    {
+      "id": "9a85",
+      "nome": "Teste testando",
+      "telefone": "(22) 22222-2222",
+      "endereco": "teste",
+      "usuario": "testando",
+      "senha": "123",
+      "nivel": "operador"
     }
   ],
   "nivelAcesso": [
@@ -137,36 +155,46 @@
   ],
   "etapa": [
     {
-      "nome": "Teste1 modifica",
-      "prazo": "2 dias",
-      "statusEtapa": "finalizada",
-      "funcSelecionado": [
-        "maria",
-        "ana"
-      ],
-      "id": "5209"
-    },
-    {
-      "id": "6b30",
       "nome": "teste2",
       "prazo": "5 dias",
-      "statusEtapa": "pendente",
+      "statusEtapa": "finalizada",
       "funcSelecionado": [
         "Pedro",
         "Bruno",
-        "Gabriela"
+        "Gabriela",
+        "Ana Elize"
       ],
-      "status": "em andamento"
+      "id": "6b30"
     },
     {
       "id": "ca42",
       "nome": "teste3",
       "prazo": "1 dia",
-      "statusEtapa": "pendente",
+      "statusEtapa": "finalizada",
       "funcSelecionado": [
         "maria",
         "Júlia",
         "Higor"
+      ],
+      "status": "finalizada"
+    },
+    {
+      "id": "01f1",
+      "nome": "testando",
+      "prazo": "1 dia",
+      "statusEtapa": "pendente",
+      "funcSelecionado": [
+        "maria"
+      ],
+      "aeronaveId": "1964"
+    },
+    {
+      "id": "e9fe",
+      "nome": "teste teste",
+      "prazo": "5 dias",
+      "statusEtapa": "pendente",
+      "funcSelecionado": [
+        "Ana Elize"
       ]
     }
   ],
@@ -221,7 +249,7 @@
       "nome": "teste",
       "tipo": "nacional",
       "fornecedor": "teste",
-      "status": "concluido",
+      "status": "pendente",
       "id": "adb5"
     },
     {
@@ -229,6 +257,13 @@
       "nome": "teste2",
       "tipo": "importada",
       "fornecedor": "teste2",
+      "status": "concluido"
+    },
+    {
+      "id": "a5ad",
+      "nome": "teste",
+      "tipo": "nacional",
+      "fornecedor": "teste",
       "status": "emProducao"
     }
   ],
@@ -272,6 +307,28 @@
       "tipo": "cargueiro",
       "capacidade": "50000",
       "alcance": "15000"
+    },
+    {
+      "id": "d185",
+      "modelo": "testando",
+      "tipo": "comercial",
+      "capacidade": "1000",
+      "alcance": "12"
+    },
+    {
+      "id": "30ee",
+      "modelo": "testando 2",
+      "tipo": "comercial",
+      "capacidade": "10",
+      "alcance": "120",
+      "statusRelatorio": ""
+    },
+    {
+      "id": "5899",
+      "modelo": "teste2",
+      "tipo": "comercial",
+      "capacidade": "12",
+      "alcance": "12"
     }
   ],
   "tipoTeste": [
@@ -366,6 +423,386 @@
       "data": "2025-11-20",
       "obs": "deu ruim no trem",
       "funcResp": "Higor"
+    },
+    {
+      "id": "3f42",
+      "aeronave": "teste2",
+      "tipoTeste": "eletrico",
+      "resultado": "aprovado",
+      "data": "2025-11-13",
+      "obs": "testando",
+      "funcResp": "Ana Elize"
+    }
+  ],
+  "relatorios": [
+    {
+      "id": "8358",
+      "aeronave": {
+        "id": "1964",
+        "modelo": "teste2",
+        "tipo": "comercial",
+        "capacidade": "1000",
+        "alcance": "12"
+      },
+      "dataGeracao": "2025-11-09T23:14:10.468Z",
+      "statusFinal": "Concluído",
+      "pecas": [
+        {
+          "id": "adb5",
+          "nome": "teste",
+          "tipo": "nacional",
+          "status": "concluido"
+        },
+        {
+          "id": "a06a",
+          "nome": "teste2",
+          "tipo": "importada",
+          "status": "concluido"
+        }
+      ],
+      "etapas": [
+        {
+          "id": "6b30",
+          "nome": "teste2",
+          "prazo": "5 dias",
+          "status": "finalizada",
+          "funcionarios": [
+            "Pedro",
+            "Bruno",
+            "Gabriela"
+          ]
+        },
+        {
+          "id": "ca42",
+          "nome": "teste3",
+          "prazo": "1 dia",
+          "status": "finalizada",
+          "funcionarios": [
+            "maria",
+            "Júlia",
+            "Higor"
+          ]
+        },
+        {
+          "id": "0a50",
+          "status": "finalizada"
+        },
+        {
+          "id": "1c7b",
+          "status": "finalizada"
+        }
+      ],
+      "testes": [
+        {
+          "id": "61e5",
+          "aeronave": "teste2",
+          "tipoTeste": "aerodinamico",
+          "resultado": "aprovado",
+          "data": "2025-11-05",
+          "obs": "deu ruim no trem",
+          "funcResp": "ana"
+        },
+        {
+          "id": "c5d6",
+          "aeronave": "Delta-V",
+          "tipoTeste": "Hidráulico",
+          "resultado": "Aprovado",
+          "data": "2025-11-01",
+          "obs": "Perda de pressão no sistema",
+          "funcResp": "Carla"
+        },
+        {
+          "id": "e7f8",
+          "aeronave": "Zeta-9",
+          "tipoTeste": "Aerodinâmico",
+          "resultado": "Reprovado",
+          "data": "2025-11-10",
+          "obs": "Instabilidade em alta velocidade",
+          "funcResp": "Maria"
+        },
+        {
+          "id": "g9h0",
+          "aeronave": "Beta-20",
+          "tipoTeste": "Elétrico",
+          "resultado": "Aprovado",
+          "data": "2025-10-15",
+          "obs": "Atualização de software necessária",
+          "funcResp": "Júlia"
+        },
+        {
+          "id": "i1j2",
+          "aeronave": "Gama-300",
+          "tipoTeste": "Hidráulico",
+          "resultado": "Aprovado",
+          "data": "2025-11-04",
+          "obs": "Teste de vibração excelente",
+          "funcResp": "Pedro"
+        },
+        {
+          "id": "0871",
+          "aeronave": "teste",
+          "tipoTeste": "aerodinamico",
+          "resultado": "aprovado",
+          "data": "2025-11-19",
+          "obs": "deu bom",
+          "funcResp": "ana"
+        },
+        {
+          "id": "67b2",
+          "aeronave": "teste",
+          "tipoTeste": "eletrico",
+          "resultado": "reprovado",
+          "data": "2025-11-20",
+          "obs": "deu ruim no trem",
+          "funcResp": "Higor"
+        }
+      ]
+    },
+    {
+      "id": "9889",
+      "aeronave": {
+        "id": "1966",
+        "modelo": "Mili-Jet Alpha",
+        "tipo": "militar",
+        "capacidade": "4",
+        "alcance": "3000"
+      },
+      "dataGeracao": "2025-11-09T23:52:15.463Z",
+      "statusFinal": "Concluído",
+      "pecas": [
+        {
+          "id": "adb5",
+          "nome": "teste",
+          "tipo": "nacional",
+          "status": "concluido"
+        },
+        {
+          "id": "a06a",
+          "nome": "teste2",
+          "tipo": "importada",
+          "status": "concluido"
+        }
+      ],
+      "etapas": [
+        {
+          "id": "6b30",
+          "nome": "teste2",
+          "prazo": "5 dias",
+          "status": "finalizada",
+          "funcionarios": [
+            "Pedro",
+            "Bruno",
+            "Gabriela"
+          ]
+        },
+        {
+          "id": "ca42",
+          "nome": "teste3",
+          "prazo": "1 dia",
+          "status": "finalizada",
+          "funcionarios": [
+            "maria",
+            "Júlia",
+            "Higor"
+          ]
+        },
+        {
+          "id": "0a50",
+          "status": "finalizada"
+        },
+        {
+          "id": "1c7b",
+          "status": "finalizada"
+        }
+      ],
+      "testes": [
+        {
+          "id": "61e5",
+          "aeronave": "teste2",
+          "tipoTeste": "aerodinamico",
+          "resultado": "aprovado",
+          "data": "2025-11-05",
+          "obs": "deu ruim no trem",
+          "funcResp": "ana"
+        },
+        {
+          "id": "c5d6",
+          "aeronave": "Delta-V",
+          "tipoTeste": "Hidráulico",
+          "resultado": "Aprovado",
+          "data": "2025-11-01",
+          "obs": "Perda de pressão no sistema",
+          "funcResp": "Carla"
+        },
+        {
+          "id": "e7f8",
+          "aeronave": "Zeta-9",
+          "tipoTeste": "Aerodinâmico",
+          "resultado": "Reprovado",
+          "data": "2025-11-10",
+          "obs": "Instabilidade em alta velocidade",
+          "funcResp": "Maria"
+        },
+        {
+          "id": "g9h0",
+          "aeronave": "Beta-20",
+          "tipoTeste": "Elétrico",
+          "resultado": "Aprovado",
+          "data": "2025-10-15",
+          "obs": "Atualização de software necessária",
+          "funcResp": "Júlia"
+        },
+        {
+          "id": "i1j2",
+          "aeronave": "Gama-300",
+          "tipoTeste": "Hidráulico",
+          "resultado": "Aprovado",
+          "data": "2025-11-04",
+          "obs": "Teste de vibração excelente",
+          "funcResp": "Pedro"
+        },
+        {
+          "id": "0871",
+          "aeronave": "teste",
+          "tipoTeste": "aerodinamico",
+          "resultado": "aprovado",
+          "data": "2025-11-19",
+          "obs": "deu bom",
+          "funcResp": "ana"
+        },
+        {
+          "id": "67b2",
+          "aeronave": "teste",
+          "tipoTeste": "eletrico",
+          "resultado": "reprovado",
+          "data": "2025-11-20",
+          "obs": "deu ruim no trem",
+          "funcResp": "Higor"
+        }
+      ]
+    },
+    {
+      "id": "f83f",
+      "aeronave": {
+        "id": "1967",
+        "modelo": "CargoMax C-90",
+        "tipo": "cargueiro",
+        "capacidade": "50000",
+        "alcance": "15000"
+      },
+      "dataGeracao": "2025-11-11T20:30:09.413Z",
+      "statusFinal": "Concluído",
+      "pecas": [
+        {
+          "id": "adb5",
+          "nome": "teste",
+          "tipo": "nacional",
+          "status": "concluido"
+        },
+        {
+          "id": "a06a",
+          "nome": "teste2",
+          "tipo": "importada",
+          "status": "concluido"
+        }
+      ],
+      "etapas": [
+        {
+          "id": "6b30",
+          "nome": "teste2",
+          "prazo": "5 dias",
+          "status": "finalizada",
+          "funcionarios": [
+            "Pedro",
+            "Bruno",
+            "Gabriela"
+          ]
+        },
+        {
+          "id": "ca42",
+          "nome": "teste3",
+          "prazo": "1 dia",
+          "status": "finalizada",
+          "funcionarios": [
+            "maria",
+            "Júlia",
+            "Higor"
+          ]
+        },
+        {
+          "id": "0a50",
+          "status": "finalizada"
+        },
+        {
+          "id": "1c7b",
+          "status": "finalizada"
+        }
+      ],
+      "testes": [
+        {
+          "id": "61e5",
+          "aeronave": "teste2",
+          "tipoTeste": "aerodinamico",
+          "resultado": "aprovado",
+          "data": "2025-11-05",
+          "obs": "deu ruim no trem",
+          "funcResp": "ana"
+        },
+        {
+          "id": "c5d6",
+          "aeronave": "Delta-V",
+          "tipoTeste": "Hidráulico",
+          "resultado": "Aprovado",
+          "data": "2025-11-01",
+          "obs": "Perda de pressão no sistema",
+          "funcResp": "Carla"
+        },
+        {
+          "id": "e7f8",
+          "aeronave": "Zeta-9",
+          "tipoTeste": "Aerodinâmico",
+          "resultado": "Reprovado",
+          "data": "2025-11-10",
+          "obs": "Instabilidade em alta velocidade",
+          "funcResp": "Maria"
+        },
+        {
+          "id": "g9h0",
+          "aeronave": "Beta-20",
+          "tipoTeste": "Elétrico",
+          "resultado": "Aprovado",
+          "data": "2025-10-15",
+          "obs": "Atualização de software necessária",
+          "funcResp": "Júlia"
+        },
+        {
+          "id": "i1j2",
+          "aeronave": "Gama-300",
+          "tipoTeste": "Hidráulico",
+          "resultado": "Aprovado",
+          "data": "2025-11-04",
+          "obs": "Teste de vibração excelente",
+          "funcResp": "Pedro"
+        },
+        {
+          "id": "0871",
+          "aeronave": "teste",
+          "tipoTeste": "aerodinamico",
+          "resultado": "aprovado",
+          "data": "2025-11-19",
+          "obs": "deu bom",
+          "funcResp": "ana"
+        },
+        {
+          "id": "67b2",
+          "aeronave": "teste",
+          "tipoTeste": "eletrico",
+          "resultado": "reprovado",
+          "data": "2025-11-20",
+          "obs": "deu ruim no trem",
+          "funcResp": "Higor"
+        }
+      ]
     }
   ]
 }

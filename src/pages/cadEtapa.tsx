@@ -23,6 +23,13 @@ type op_func = {
     id?: number
 }
 
+type EtapaPayload = {
+    nome: string;
+    prazo: string;
+    statusEtapa: string;
+    funcSelecionado: string[];
+    aeronaveId?: number | null; // Torna a propriedade conhecida, mas opcional
+}
 
 interface PropsEtapa {
     etapaId?: number
@@ -63,7 +70,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
         this.PegaFunc()
         if (this.props.etapaId) {
             this.pegaEtapa();
-        }else {
+        } else {
             this.setState({ statusEtapa: "pendente" });
         }
     }
@@ -148,10 +155,10 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                 value: func.nome,
                 label: func.nome,
                 id: func.id
-            })) 
+            }))
             this.setState({
                 opFunc: opcoesFormatadas,
-                funcSelecionado: this.props.etapaId ? this.state.funcSelecionado : [] 
+                funcSelecionado: this.props.etapaId ? this.state.funcSelecionado : []
             })
         } catch (err) {
             this.setState({
@@ -190,24 +197,20 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
         e.preventDefault();
 
         const { nome, prazo, statusEtapa, funcSelecionado } = this.state
-        const { etapaId,aeronaveId } = this.props
+        const { etapaId, aeronaveId } = this.props
 
         const edicao = !!etapaId;
         const edit_cad = edicao ? `${url}/etapa/${etapaId}` : `${url}/etapa`;
         const metodo = edicao ? 'PUT' : 'POST';
 
-        const novaEtapa = {
+        const novaEtapa: EtapaPayload = {
             nome,
             prazo,
             statusEtapa,
             funcSelecionado
         }
-        if (!edicao) {
-            if (!aeronaveId) {
-                alert("Erro: ID da aeronave não fornecido para o cadastro da etapa.");
-                return;
-            }
-            (novaEtapa as any).aeronaveId = aeronaveId; 
+        if (!edicao && aeronaveId !== null && aeronaveId !== undefined) {
+            novaEtapa.aeronaveId = aeronaveId;
         }
 
         try {
@@ -259,8 +262,8 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
         return (
             <>
                 <section className="w-full h-full flex justify-center items-center">
-                    <section className="w-[80%] flex flex-col justify-center items-center p-5">
-                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mb-[7%]">{`${!edicao ? 'Cadastrar Etapa' : 'Edição'} `}</h1>
+                    <section className="w-full flex flex-col justify-center items-center p-3">
+                        <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mb-[7%]">{`${!edicao ? 'Cadastrar Etapa' : 'Editar Etapa'} `}</h1>
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
                                 {resp.message}
@@ -275,7 +278,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
+                                classNameInput="w-full sm:w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Nome
                             </InputLinha>
@@ -287,7 +290,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
+                                classNameInput="w-full sm:w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Prazo
                             </InputLinha>
@@ -298,7 +301,7 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 opcoes={opEtapa}
                                 onChange={this.Inputs}
                                 required
-                                classNameSelect="w-[300px] md:w-[400px] lg:w-[500px]"
+                                classNameSelect="w-full sm:w-[300px] md:w-[400px] lg:w-[500px]"
                                 disabled={!edicao ? true : false}
                             />
                             <DropBox
@@ -310,14 +313,14 @@ export default class CadEtapa extends Component<PropsEtapa, StateEtapa> {
                                 onChange={this.handleFuncionarioChange}
                             />
                             <section className="col-span-2 flex flex-row-reverse justify-center gap-x-8 p-2 mt-5">
-                                <button id="botao-cad" className="w-[50%] p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
+                                <button id="botao-cad" className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea5] rounded-[20px] text-white font-medium text-sm md:font-semibold md:text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
                                     Enviar
                                 </button>
                                 {edicao && (
                                     <button
                                         type="button"
                                         onClick={this.Cancelar}
-                                        className="w-[50%] p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
+                                        className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-medium text-sm md:font-semibold md:text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
                                     >
                                         Cancelar
                                     </button>

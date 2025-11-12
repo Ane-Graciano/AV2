@@ -20,8 +20,8 @@ type etapas = {
 }
 
 interface PropsEtapa {
-    aeronaveId?: number | null; 
-    etapaId?: number; 
+    aeronaveId?: number | null;
+    etapaId?: number;
     onCadastroSucesso?: () => void;
 }
 
@@ -140,20 +140,20 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
     }
 
     abreCadEtapa(e: React.MouseEvent) {
-    e.preventDefault()
-    this.setState({
-        conteudoModal: (
-            <CadEtapa 
-                aeronaveId={this.props.aeronaveId} 
-                onCadastroSucesso={() => {
-                    this.setState({ modalAberto: false, conteudoModal: null });
-                    this.PegaEtapas();
-                }}
-            />
-        ),
-        modalAberto: true
-    })
-}
+        e.preventDefault()
+        this.setState({
+            conteudoModal: (
+                <CadEtapa
+                    aeronaveId={this.props.aeronaveId}
+                    onCadastroSucesso={() => {
+                        this.setState({ modalAberto: false, conteudoModal: null });
+                        this.PegaEtapas();
+                    }}
+                />
+            ),
+            modalAberto: true
+        })
+    }
 
     abreEditaEtapa(etapaParaEditar: etapas) {
         this.setState({
@@ -177,12 +177,12 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
 
         return dados.map((etapaAtual, index) => {
 
-            const statusAtual = etapaAtual.statusEtapa.toLowerCase()
+            const statusAtual = (etapaAtual.statusEtapa || '').toLowerCase()
             const etapaAnterior = index > 0 ? etapasCompletas[index - 1] : null
 
             const podeIniciar =
                 index === 0 ||
-                (etapaAnterior && etapaAnterior.statusEtapa.toLowerCase() === 'finalizada')
+                (etapaAnterior && (etapaAnterior.statusEtapa || '').toLowerCase() === 'finalizada')
 
             const estaPendente = statusAtual === 'pendente'
             const estaEmAndamento = statusAtual === 'em andamento'
@@ -248,7 +248,7 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
                         onClick={() => this.abreEditaEtapa(etapaAtual)}
                         className="p-2 bg-[#3a6ea5] text-white rounded text-xs hover:bg-blue-600 transition"
                     >
-                        Editar ✏️
+                        Editar
                     </button>
                 );
 
@@ -266,7 +266,7 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
 
             return {
                 ...etapaAtual,
-                funcSelecionado: etapaAtual.funcSelecionado.join(', '),
+                funcSelecionado: Array.isArray(etapaAtual.funcSelecionado) ? etapaAtual.funcSelecionado.join(', '): 'Nenhum funcionário', 
                 inicia: botaoInicia,
                 finaliza: botaoFinaliza,
                 editar: botaoEditar
@@ -287,16 +287,16 @@ export default class VisEtapa extends Component<PropsEtapa, StateEtapa> {
                         )}
                     </section>
                     <section className="">
-                        <section className="mt-[3%] ml-[5%]">
+                        <section className="mt-[15%] ml-[5%] mb-[10%] sm:mt[5%] sm:mb-[4%] md:mt-[5%] md:mb-[5%] lg:mt-[2%] lg:mb-[5%]">
                             <BarraPesquisa
                                 onPesquisa={this.HandlePesquisa}
-                                placeholder="Buscar por nome, usuáario ou nível..."
+                                placeholder="Buscar por nome, prazo ou status"
                             />
                         </section>
                         <section className="flex justify-between w-[90%] m-auto mt-[3%]">
-                            <h1 className="text-black font-bold text-4xl font-nunito">Etapas</h1>
+                            <h1 className="text-black font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl font-nunito">Etapas</h1>
                             {podeModifica && (
-                                <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadEtapa}>+ Etapa</button>
+                                <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm md:text-lg  p-1 md:p-2 lg:p-2 rounded-3xl pl-10 pr-10 md:pl-14 md:pr-14 lg:pl-14 lg:pr-14 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]" onClick={this.abreCadEtapa}>+ Etapa</button>
                             )}
                         </section>
                         {erro && (

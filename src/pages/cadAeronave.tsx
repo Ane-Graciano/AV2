@@ -131,7 +131,7 @@ export default class CadAeronave extends Component<PropsAero, StateAero> {
         const { aeronaveId } = this.props
 
         const edicao = !!aeronaveId;
-        const edit_cad = edicao ? `${url}/aeronave/${aeronaveId}` : `${url}/etapa`;
+        const edit_cad = edicao ? `${url}/aeronave/${aeronaveId}` : `${url}/aeronave`;
         const metodo = edicao ? 'PUT' : 'POST';
 
 
@@ -193,7 +193,7 @@ export default class CadAeronave extends Component<PropsAero, StateAero> {
         return (
             <>
                 <section className="w-full h-full flex justify-center items-center">
-                    <section className="w-[80%] flex flex-col justify-center items-center p-5">
+                    <section className="w-full flex flex-col justify-center items-center p-3">
                         <h1 className="text-[#3a6ea5] font-medium text-2xl md:font-bold md:text-3xl lg:font-bold lg:text-4xl text-center mb-[7%]">{`${!edicao ? 'Cadastrar Aeronave' : 'Edição'} `}</h1>
                         {resp && (
                             <div className={`p-2 my-3 font-semibold ${resp.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
@@ -209,7 +209,7 @@ export default class CadAeronave extends Component<PropsAero, StateAero> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
+                                classNameInput="w-full sm:w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Modelo
                             </InputLinha>
@@ -220,7 +220,7 @@ export default class CadAeronave extends Component<PropsAero, StateAero> {
                                 opcoes={opTipo}
                                 onChange={this.Inputs}
                                 required
-                                classNameSelect="w-[300px] md:w-[400px] lg:w-[500px]"
+                                classNameSelect="w-full sm:w-[300px] md:w-[400px] lg:w-[500px]"
                             />
                             <InputLinha
                                 type="number"
@@ -230,7 +230,7 @@ export default class CadAeronave extends Component<PropsAero, StateAero> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
+                                classNameInput="w-full sm:w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Alcance
                             </InputLinha>
@@ -242,19 +242,19 @@ export default class CadAeronave extends Component<PropsAero, StateAero> {
                                 placeholder=""
                                 onChange={this.Inputs}
                                 required
-                                classNameInput="w-[300px] md:w-[400px] lg:w-[500px]"
+                                classNameInput="w-full sm:w-[300px] md:w-[400px] lg:w-[500px]"
                             >
                                 Capacidade
                             </InputLinha>
                             <section className="col-span-2 flex flex-row-reverse justify-center gap-x-8 p-2 mt-5">
-                                <button id="botao-cad" className="w-[50%] p-1 md:p-2 lg:p-3 bg-[#3a6ea5] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
+                                <button id="botao-cad" className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea5] rounded-[20px] text-white font-medium md:font-semibold text-sm md:text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:border-[#184e77]">
                                     Enviar
                                 </button>
                                 {edicao && (
                                     <button
                                         type="button"
                                         onClick={this.Cancelar}
-                                        className="w-[50%] p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-semibold text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
+                                        className="w-[40%] p-1 md:p-2 lg:p-3 bg-[#3a6ea59b] rounded-[20px] text-white font-medium md:font-semibold text-sm md:text-lg cursor-pointer border-2 border-transparent transition duration-250 hover:bg-[#184e77] hover:border-[#3a6ea59b] focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-offset-2"
                                     >
                                         Cancelar
                                     </button>

@@ -32,6 +32,14 @@ body {
   min-height: 100vh;
 }
 
+.btn-pdf{
+  background-color: #3a6ea5; 
+  color: white;
+  font-weight: 600;
+  padding: 8px 24px;
+  border-radius: 9999px; 
+  transition: background-color 0.15s ease-in-out;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

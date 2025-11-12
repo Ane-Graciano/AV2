@@ -1,5 +1,5 @@
 import { Component } from "react"
-import { type aeronaves, type etapa, type peca, type teste } from "../pages/visAeronave"
+import { type aeronaves, type etapa, type peca, type teste } from "../types";
 import Tabela, { type Coluna } from "../components/tabela";
 import CadEtapa from "../pages/cadEtapa";
 import Modal from "./modal";
@@ -137,13 +137,12 @@ export default class DetalhesAero extends Component<PropsDetalhesAero, StateDeta
     }
 
     FormataEtapa() {
-        const { etapas, onToggleEtapa, etapasSelecionadas, nivelAcesso } = this.props;
-        // 🎯 Apenas Administrador e Engenheiro podem editar etapas ou realizar operações em lote
-        const podeModificar = nivelAcesso === 'administrativo' || nivelAcesso === 'engenheiro';
+        const { etapas, onToggleEtapa, etapasSelecionadas, nivelAcesso } = this.props
+        const podeModificar = nivelAcesso === 'administrativo' || nivelAcesso === 'engenheiro'
 
         return etapas.map(e => {
-            let campoSelecao: React.ReactNode = <span className="text-gray-500 text-xs">-</span>;
-            let botaoEditar: React.ReactNode = <span className="text-gray-500 text-xs">N/A</span>;
+            let campoSelecao: React.ReactNode = <span className="text-gray-500 text-xs">-</span>
+            let botaoEditar: React.ReactNode = <span className="text-gray-500 text-xs">N/A</span>
 
             if (podeModificar) {
                 campoSelecao = (
@@ -177,7 +176,6 @@ export default class DetalhesAero extends Component<PropsDetalhesAero, StateDeta
     FormataPecas() {
         const { pecas, onAbreEditaPeca, nivelAcesso } = this.props;
         const { statusPecaTemp } = this.state;
-        // 🎯 Apenas Administrador e Engenheiro podem editar os dados cadastrais da peça
         const podeEditarPeca = nivelAcesso === 'administrativo' || nivelAcesso === 'engenheiro';
 
         return pecas.map(p => {
@@ -230,17 +228,108 @@ export default class DetalhesAero extends Component<PropsDetalhesAero, StateDeta
         })
     }
 
-    gerarEVisualizarRelatorio(e: React.MouseEvent) {
+    async gerarEVisualizarRelatorio(e: React.MouseEvent) {
         e.preventDefault();
 
-        const { aeronave } = this.props;
+        const { aeronave, pecas, etapas, testes, onRecarregarDetalhes } = this.props
 
-        this.setState({
-            conteudoModal: <VisRelatorio aeronaveModelo={aeronave.modelo} />,
-            modalAberto: true,
-        });
+        if (aeronave.statusRelatorio === 'Concluído') {
+            alert(`O relatório final para a aeronave ${aeronave.modelo} já foi gerado e está ${aeronave.statusRelatorio}.`);
+            this.setState({
+                conteudoModal: <VisRelatorio
+                    aeronave={aeronave}
+                    pecas={pecas}
+                    etapas={etapas}
+                    testes={testes}
+                    onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })}
+                />,
+                modalAberto: true,
+            });
+            return;
+        }
 
-        console.log(`Iniciando geração do relatório final para a aeronave ${aeronave.modelo}...`);
+        const etapasIncompletas = etapas.filter(etapa => etapa.status !== 'finalizada')
+        if (etapasIncompletas.length > 0) {
+            alert(`Não é possível gerar o relatório. ${etapasIncompletas.length} etapas ainda não foram finalizadas.`)
+            return
+        }
+
+        const pecasIncompletas = pecas.filter(peca => peca.status !== 'concluido')
+        if (pecasIncompletas.length > 0) {
+            alert(`Não é possível gerar o relatório. ${pecasIncompletas.length} peças ainda não estão com o status 'Concluído'.`)
+            return
+        }
+
+        if (!window.confirm(`Todas as etapas e peças estão concluídas. Deseja finalizar o processo da aeronave ${aeronave.modelo} e gerar o relatório?`)) {
+            return;
+        }
+
+        const novoStatusRelatorio = 'Concluído'
+
+        try {
+            const dadosRelatorio = {
+                aeronave: aeronave,
+                dataGeracao: new Date().toISOString(),
+                statusFinal: novoStatusRelatorio,
+                pecas: pecas.map(p => ({
+                    id: p.id,
+                    nome: p.nome,
+                    tipo: p.tipo,
+                    status: p.status,
+                })),
+                etapas: etapas.map(e => ({
+                    id: e.id,
+                    nome: e.nome,
+                    prazo: e.prazo,
+                    status: e.status,
+                    funcionarios: e.funcSelecionado,
+                })),
+                testes: testes,
+            }
+
+            const resRelatorio = await fetch(`${this.url}/relatorios`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dadosRelatorio),
+            });
+
+            if (!resRelatorio.ok) {
+                throw new Error(`Erro ao salvar o relatório: ${resRelatorio.status} ${resRelatorio.statusText}`);
+            }
+
+            const resAeronave = await fetch(`${this.url}/aeronaves/${aeronave.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    statusRelatorio: novoStatusRelatorio // Atualiza o campo que você usa para bloquear
+                }),
+            });
+
+            if (!resAeronave.ok) {
+                console.warn("Aviso: Falha ao atualizar o statusRelatorio da aeronave. O bloqueio pode não funcionar após o reload.");
+            }
+
+            // 3. Recarregar os detalhes para buscar o novo statusRelatorio
+            await onRecarregarDetalhes(aeronave.id);
+
+            console.log(`Relatório final para a aeronave ${aeronave.modelo} salvo com sucesso!`);
+            alert("Relatório final gerado e salvo com sucesso!");
+
+            this.setState({
+                conteudoModal: <VisRelatorio
+                    aeronave={aeronave}
+                    pecas={pecas}
+                    etapas={etapas}
+                    testes={testes}
+                    onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })}
+                />,
+                modalAberto: true,
+            });
+
+        } catch (error) {
+            console.error('Erro ao gerar/salvar relatório:', error);
+            alert(`Falha ao gerar e salvar o relatório final: ${(error as Error).message}.`);
+        }
     }
 
     render() {
@@ -248,27 +337,29 @@ export default class DetalhesAero extends Component<PropsDetalhesAero, StateDeta
         const { modalAberto, conteudoModal } = this.state
         const dadosEtapasFormatados = this.FormataEtapa()
         const dadosPecasFormatados = this.FormataPecas()
-        const podeModificar = nivelAcesso === 'administrativo' || nivelAcesso === 'engenheiro';
-        const tabelaMaxWidth = "w-full max-w-7xl mx-auto";
+        const podeModificar = nivelAcesso === 'administrativo' || nivelAcesso === 'engenheiro'
+        const tabelaMaxWidth = "w-full max-w-7xl mx-auto"
+        const relatorioConcluido = aeronave.statusRelatorio === 'Concluído'
+        const textoBotao = relatorioConcluido ? `Relatório Concluído (Visualizar)` : 'Gerar relatório final'
         return (
             <>
                 <section className="p-5 w-full h-full overflow-y-auto border-b border-black shadow-2xl">
                     <section className="w-full mb-[2%]">
-                        <h1 className="text-black font-bold text-3xl mb-[1%]">Dados Gerais</h1>
+                        <h1 className="text-black font-bold text-lg md:text-2xl lg:text-3xl mb-[1%]">Dados Gerais</h1>
                         <section className="grid grid-cols-2">
                             <section>
-                                <p className="text-black font-medium text-xl">{aeronave.modelo}</p>
-                                <p className="text-black font-medium text-xl">{aeronave.tipo}</p>
+                                <p className="text-black font-medium text-xs sm:text-sm  md:text-sm lg:text-xl">{aeronave.modelo}</p>
+                                <p className="text-black font-medium text-xs sm:text-sm  md:text-sm lg:text-xl">{aeronave.tipo}</p>
                             </section>
                             <section>
-                                <p className="text-black font-medium text-xl">{aeronave.alcance}</p>
-                                <p className="text-black font-medium text-xl">{aeronave.capacidade}</p>
+                                <p className="text-black font-medium text-xs sm:text-sm  md:text-sm lg:text-xl">{aeronave.alcance}</p>
+                                <p className="text-black font-medium text-xs sm:text-sm  md:text-sm lg:text-xl">{aeronave.capacidade}</p>
                             </section>
                         </section>
                     </section>
                     <section className="mt-[5%]">
                         <section className="flex justify-between items-center mb-4">
-                            <h1 className="text-black font-bold text-3xl">Etapas</h1>
+                            <h1 className="text-black font-bold text-lg md:text-2xl lg:text-3xl mb-[1%]">Etapas</h1>
                             {podeModificar && (
                                 <button className="bg-[#3a6ea5] text-white font-nunito font-semibold text-sm p-2 rounded-lg hover:bg-[#24679a] transition" onClick={this.abreCadEtapa}>
                                     + vincula etapa
@@ -313,7 +404,7 @@ export default class DetalhesAero extends Component<PropsDetalhesAero, StateDeta
                         </section>
                     </section>
                     <section className="mt-[5%]">
-                        <h1 className="text-black font-bold text-3xl mb-[4%]">Peças</h1>
+                        <h1 className="text-black font-bold text-lg md:text-2xl lg:text-3xl mb-[1%]">Peças</h1>
                         <section>
                             {pecas.length > 0 ? (
                                 <Tabela colunas={this.colunasPecas} dados={dadosPecasFormatados} classname={`${tabelaMaxWidth} overflow-auto`} />
@@ -323,7 +414,7 @@ export default class DetalhesAero extends Component<PropsDetalhesAero, StateDeta
                         </section>
                     </section>
                     <section className="mt-[5%]">
-                        <h1 className="text-black font-bold text-3xl mb-[4%]">Testes</h1>
+                        <h1 className="text-black font-bold text-lg md:text-2xl lg:text-3xl mb-[1%]">Testes</h1>
                         <section>
                             {testes.length > 0 ? (
                                 <Tabela colunas={this.colunasTestes} dados={testes} classname={`${tabelaMaxWidth} overflow-auto`} />
@@ -333,11 +424,14 @@ export default class DetalhesAero extends Component<PropsDetalhesAero, StateDeta
                         </section>
                     </section>
                     {podeModificar && (
-                        <button 
-                            type="button" 
-                            onClick={this.gerarEVisualizarRelatorio} 
-                            className="bg-[#3a6ea5] mt-[5%]  text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 border-[#24679a] cursor-pointer hover:border-[#184e77]">
-                            Gerar relatório final
+                        <button
+                            type="button"
+                            onClick={this.gerarEVisualizarRelatorio}
+                            disabled={relatorioConcluido}
+                            className={`mt-[5%] text-white font-nunito font-semibold text-sm p-3 rounded-3xl pl-10 pr-10 border-2 transition
+                                ${relatorioConcluido ? 'bg-gray-400 border-gray-500 cursor-not-allowed' : 'bg-[#3a6ea5] border-[#24679a] cursor-pointer hover:border-[#184e77]'}`}
+                        >
+                            {textoBotao}
                         </button>
                     )}
                 </section>

@@ -11,11 +11,11 @@ import VisTeste from './pages/visTeste.tsx'
 import VisEtapa from './pages/visEtapa.tsx'
 import VisAeronave from './pages/visAeronave.tsx'
 import Login from './pages/Login.tsx'
+import VisRelatorio2 from './pages/visRelatoio.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      {/* <App /> */}
       <Routes>
         <Route path='/home' element={<App/>}/>
         <Route path='/funcs' element={<VisFunc/>}/>
@@ -23,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/testes' element={<VisTeste/>}/>
         <Route path='/etapas' element={<VisEtapa/>}/>
         <Route path='/aeronaves' element={<VisAeronave/>}/>
+        <Route path='/relatorios' element={<VisRelatorio2/>}/>
         <Route path='/' element={<Login/>}/>
       </Routes>
     </BrowserRouter>

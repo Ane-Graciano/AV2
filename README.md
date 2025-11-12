@@ -12,13 +12,6 @@ Para rodar este projeto, você precisará ter o seguinte instalado:
 
 ---
 
-## 🛠️ para logar
-| Nível | Usuário | Senha |
-| :--- | :--- | :--- |
-| **ADMINISTRADOR** | `ana` | `123` |
-| **ENGENHEIRO** | `lari` | `123` |
-| **OPERADOR** | `lukas` | `123456` |
-
 ### Instalação
 
 1.  Clone o repositório:
@@ -46,4 +39,12 @@ Para rodar este projeto, você precisará ter o seguinte instalado:
     json-server --watch db.json --port 3000
     ```
 
+---
+
+## 🛠️ para logar
+| Nível | Usuário | Senha |
+| :--- | :--- | :--- |
+| **ADMINISTRADOR** | `ana` | `123` |
+| **ENGENHEIRO** | `lari` | `123` |
+| **OPERADOR** | `lukas` | `123456` |
 

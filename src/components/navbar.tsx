@@ -236,6 +236,10 @@ export default class NavBar extends Component<NavBarProps, NavBarState> {
                                                 <FaClipboardList size={30} className="text-[#135b78]" />
                                                 {navAberta ? <p>Lista Testes</p> : null}
                                             </NavLink>
+                                            <NavLink to="/relatorios" className={`flex items-center gap-5`} >
+                                                <FaClipboardList size={30} className="text-[#135b78]" />
+                                                {navAberta ? <p>Lista Relatórios</p> : null}
+                                            </NavLink>
                                         </section>
                                     )}
                                 </section>
@@ -243,7 +247,7 @@ export default class NavBar extends Component<NavBarProps, NavBarState> {
                         )}
                     </section>
                 </nav>
-                <Modal aberto={modalAberto} onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })}>
+                <Modal aberto={modalAberto} onFechar={() => this.setState({ modalAberto: false, conteudoModal: null })} modalClassName="mt-5 md:mt-0">
                     {conteudoModal}
                 </Modal>
             </>
